@@ -18,7 +18,13 @@ export function setAttr(selector, attr, value) {
 
 //Set a media URL path, prepending the CONTENT_BASE path to the relative path
 export function mediaUrl(path) {
-  return `${CONTENT_BASE}/${path}`;
+  console.log("Path received:", path);
+
+  const url = `${CONTENT_BASE}/${path}`;
+
+  console.log("Final URL:", url);
+
+  return url;
 }
 
 // Escapes a string for safe use inside an HTML attribute value
