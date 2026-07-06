@@ -1,7 +1,7 @@
 // ── HELPERS ───────────────────────────────────────────────────────────────────
-// import { CONTENT_BASE_URL} from './env.js';
+import { CONTENT_BASE_URL} from './env.js';
 //Update the Content URL base path (from local to production) for fetching JSON content
-export const CONTENT_BASE = window.CONTENT_BASE_URL || '';
+export const CONTENT_BASE = CONTENT_BASE_URL;
 
 //Update text for the elements with (data-c="...") attribute selector, if the value is not null/undefined
 export function setText(selector, value) {
