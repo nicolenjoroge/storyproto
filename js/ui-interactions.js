@@ -118,6 +118,25 @@ export function bindScrollDots(scrollEl, dotsEl, itemWidth) {
 }
 window.bindScrollDots = bindScrollDots;
 
+export function bindShelfArrows(scrollEl, leftBtn, rightBtn, itemWidth) {
+  if (!scrollEl || !leftBtn || !rightBtn) return;
+
+  function update() {
+    leftBtn.classList.toggle('is-hidden', scrollEl.scrollLeft <= 0);
+    rightBtn.classList.toggle('is-hidden',
+      scrollEl.scrollLeft >= scrollEl.scrollWidth - scrollEl.clientWidth - 4);
+  }
+
+  leftBtn.addEventListener('click', () => {
+    scrollEl.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+  });
+  rightBtn.addEventListener('click', () => {
+    scrollEl.scrollBy({ left: itemWidth, behavior: 'smooth' });
+  });
+
+  scrollEl.addEventListener('scroll', update, { passive: true });
+  update();
+}
 // ═══════════════════════════════════════════════════════════════════════════
 // SPOTLIGHT: CONFETTI BACKGROUND
 // ═══════════════════════════════════════════════════════════════════════════

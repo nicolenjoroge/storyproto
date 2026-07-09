@@ -1,6 +1,6 @@
 // ── INNOVATION ────────────────────────────────────────────────────────────────
 import { setText, mediaUrl, escAttr } from './helpers.js';
-import { bindScrollDots } from './ui-interactions.js';
+import { bindScrollDots, bindShelfArrows } from './ui-interactions.js';
 
 //Render the Innovation section
 export function renderInnovation(inn) {
@@ -23,7 +23,7 @@ function renderTopInitiatives(section) {
   const dotsEl = document.getElementById('dots-initiatives');
   if (!el) return;
 
-  const CARD_WIDTH = 358; // card width + gap
+  const CARD_WIDTH = 358;
 
   el.innerHTML = section.items.map(item => {
     const clickHandler = item.rank === 1 && item.ctaHref
@@ -39,20 +39,24 @@ function renderTopInitiatives(section) {
         <div class="shelf-rank">${item.rank}</div>
         <div class="shelf-art">
           <img src="${mediaUrl(item.image)}" alt="${escAttr(item.title)}" />
-           ${item.rank !== 1 ? `<div class="card-hover-overlay"><span>Click for more</span></div>` : ''}
+          ${item.rank !== 1 ? `<div class="card-hover-overlay"><span>Click for more</span></div>` : ''}
         </div>
         <div class="shelf-body">
           <h4>${item.title}</h4>
-          
         </div>
       </div>`;
   }).join('');
 
-  // Generate one dot per card
   if (dotsEl) {
     dotsEl.innerHTML = section.items.map(() => `<div class="sdot"></div>`).join('');
     bindScrollDots(el, dotsEl, CARD_WIDTH);
   }
+  bindShelfArrows(
+    el,
+    document.getElementById('arr-left-initiatives'),
+    document.getElementById('arr-right-initiatives'),
+    CARD_WIDTH
+  );
 }
 
 // Deployed initiatives — list-generated, Modal opening for more details
@@ -65,7 +69,7 @@ function renderDeployed(section) {
   const dotsEl = document.getElementById('dots-deployed');
   if (!el) return;
 
-  const CARD_WIDTH = 236; // card width + gap
+  const CARD_WIDTH = 236;
 
   el.innerHTML = section.items.map(item => `
     <div class="poster-card"
@@ -86,6 +90,12 @@ function renderDeployed(section) {
     dotsEl.innerHTML = section.items.map(() => `<div class="sdot"></div>`).join('');
     bindScrollDots(el, dotsEl, CARD_WIDTH);
   }
+  bindShelfArrows(
+    el,
+    document.getElementById('arr-left-deployed'),
+    document.getElementById('arr-right-deployed'),
+    CARD_WIDTH
+  );
 }
 
 // Coming soon — list-generated
@@ -98,7 +108,7 @@ function renderComingSoon(section) {
   const dotsEl = document.getElementById('dots-soon');
   if (!el) return;
 
-  const CARD_WIDTH = 236; // card width + gap
+  const CARD_WIDTH = 236;
 
   el.innerHTML = section.items.map(item => `
     <div class="soon-card"
@@ -122,18 +132,27 @@ function renderComingSoon(section) {
     dotsEl.innerHTML = section.items.map(() => `<div class="sdot"></div>`).join('');
     bindScrollDots(el, dotsEl, CARD_WIDTH);
   }
+  bindShelfArrows(
+    el,
+    document.getElementById('arr-left-soon'),
+    document.getElementById('arr-right-soon'),
+    CARD_WIDTH
+  );
 }
 
-// Innovation video shelf — fixed elements updated in place
-// (the <video> elements stay in HTML; only tag/title text and src/poster swap)
+// Innovation video shelf — list-generated, any number of videos supported
 function renderInnovationVideos(section) {
   if (!section) return;
   setText('[data-c="inn-vid-label"]', section.rowLabel);
   setText('[data-c="inn-vid-title"]', section.rowTitle);
   setText('[data-c="inn-vid-note"]',  section.rowNote);
 
-  const el = document.getElementById('shelf-videos');
+  const el     = document.getElementById('shelf-videos');
+  const dotsEl = document.getElementById('dots-videos');
   if (!el) return;
+
+  const CARD_WIDTH = 380;
+
   el.innerHTML = section.items.map((item, i) => `
     <div class="vid-card-lg" id="${item.id}">
       <video
@@ -150,4 +169,15 @@ function renderInnovationVideos(section) {
         <h6>${item.title}</h6>
       </div>
     </div>`).join('');
+
+  if (dotsEl) {
+    dotsEl.innerHTML = section.items.map(() => `<div class="sdot"></div>`).join('');
+    bindScrollDots(el, dotsEl, CARD_WIDTH);
+  }
+  bindShelfArrows(
+    el,
+    document.getElementById('arr-left-videos'),
+    document.getElementById('arr-right-videos'),
+    CARD_WIDTH
+  );
 }

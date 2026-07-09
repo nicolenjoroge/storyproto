@@ -1918,6 +1918,45 @@ nav.masternav {
   display: none;
 }
 
+#sec-innovation .shelf-row {
+  position: relative;
+}
+
+#sec-innovation .shelf-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+#sec-innovation .shelf-arrow:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+#sec-innovation .shelf-arrow.arrow-left {
+  left: 12px;
+}
+#sec-innovation .shelf-arrow.arrow-right {
+  right: 12px;
+}
+
+#sec-innovation .shelf-arrow.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
 /* Keep poster-grid as horizontal scroll, not a CSS grid */
 #sec-innovation .poster-grid {
   display: flex;
