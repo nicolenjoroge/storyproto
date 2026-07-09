@@ -60,6 +60,8 @@ nav.masternav {
   font-size: 14px;
   letter-spacing: 1px;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
 }
 
 .masternav-logo span {
@@ -282,6 +284,7 @@ nav.masternav {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
+
 
 #sec-landing .nav-logo img {
   height: 26px;
