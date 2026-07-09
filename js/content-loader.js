@@ -10,7 +10,7 @@ import { renderWhatsNew }   from './whats-new.js';
 export async function loadContent() {
   try {
     const manifest = await fetch(`${CONTENT_BASE}/content/manifest.json`).then(r => r.json());
-    const data     = await fetch(`${CONTENT_BASE}/content/published/${manifest.liveVersion}.json`).then(r => r.json());
+    const data     = await fetch(`${CONTENT_BASE}/content/published/v${manifest.liveVersion}.json`).then(r => r.json());
     const index    = buildIndex(data);
     renderAll(data, index);
     document.dispatchEvent(new Event('contentReady'));
