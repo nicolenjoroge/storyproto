@@ -53,13 +53,21 @@ function renderFeaturedInitiative(config, index) {
 function renderLandingVideos(config, index) {
   if (!config?.refIds) return;
   const items = config.refIds.map(id => index[id]).filter(Boolean);
+
   items.forEach((item, i) => {
     setText(`[data-c="video-tag-${i}"]`,   item.tag);
     setText(`[data-c="video-title-${i}"]`, item.title);
     setAttr(`[data-c="video-thumb-${i}"]`, 'src', mediaUrl(item.thumbnail));
+    setAttr(`[data-c="video-thumb-${i}"]`, 'alt', item.tag);
+
+    // Wire the click to scroll to the actual video id from the JSON
+    const slide = document.querySelector(`[data-slide="${i}"]`);
+    if (slide && item.id) {
+      slide.style.cursor = 'pointer';
+      slide.onclick = () => scrollToSection(item.id);
+    }
   });
 }
-
 // Storyhub "Around the storyhub" panel — ordered list of section teasers
 function renderStoryhub(config, index) {
   if (!config?.refIds) return;
