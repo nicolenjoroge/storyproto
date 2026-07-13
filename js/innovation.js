@@ -158,7 +158,7 @@ function renderInnovationVideos(section) {
       <video
         class="vid-video"
         poster="${mediaUrl(item.poster)}"
-        preload="none"
+        preload="metadata"
         playsinline
         controls>
         <source src="${mediaUrl(item.src)}" type="video/mp4" />

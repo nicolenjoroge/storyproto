@@ -62,11 +62,29 @@ export function scrollToSection(id) {
   const section = document.getElementById(id);
   if (!section) return;
 
+  // Pause all other videos first
+  document.querySelectorAll('.vid-video').forEach(v => {
+    if (v.closest('.vid-card-lg')?.id !== id) {
+      v.pause();
+    }
+  });
+  
   section.scrollIntoView({ behavior: 'smooth', block: 'center' });
   section.classList.add('highlight-section', 'sparkle-active');
   setTimeout(() => {
     section.classList.remove('highlight-section', 'sparkle-active');
   }, 2000);
+  // After scroll animation completes, find and play the video inside
+  setTimeout(() => {
+    const video = section.querySelector('video');
+    if (video) {
+      video.currentTime = 0;   // rewind to start
+      video.play().catch(() => {
+        // Autoplay blocked by browser — silently ignore
+        // user can still click play manually
+      });
+    }
+  }, 800);
 }
 window.scrollToSection = scrollToSection;
 

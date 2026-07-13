@@ -448,7 +448,93 @@ nav.masternav {
   border-radius: 14px;
   overflow: visible;
   height: auto;
+  display: flex;
+  flex-direction: column;
 }
+
+
+/* Banner fills remaining space */
+#sec-landing .storyhub-banner {
+  margin-top: auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 14px 14px;
+  min-height: 160px;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px 22px;
+  flex-shrink: 0;
+}
+
+/* Gradient background — dark cocoa into passion */
+#sec-landing .storyhub-banner-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(159, 25, 126, 0.45) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 20% 90%,
+      rgba(58, 179, 229, 0.15) 0%,
+      transparent 50%
+    ),
+    linear-gradient(160deg, #1a1614 0%, #2a1520 100%);
+  pointer-events: none;
+}
+
+/* Crosshatch texture overlay */
+#sec-landing .storyhub-banner-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.015) 0 1px,
+    transparent 1px 12px
+  );
+  pointer-events: none;
+}
+
+#sec-landing .storyhub-banner-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#sec-landing .storyhub-banner-eyebrow {
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+#sec-landing .storyhub-banner-title {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+/* Each letter gets its brand colour */
+#sec-landing .storyhub-r { color: var(--coral-landing); }
+#sec-landing .storyhub-e { color: var(--sun-landing); }
+#sec-landing .storyhub-a { color: var(--med-landing); }
+
+#sec-landing .storyhub-banner-sub {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  max-width: 260px;
+  margin-top: 4px;
+}
+
 
 /* 2026 watermark — stays in hero, left side */
 #sec-landing .hero-bg-year {
