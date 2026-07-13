@@ -76,87 +76,81 @@
       </a>
     </div>
 
-    <!-- HERO: 2026 as quiet background numeral -->
-    <section class="hero" id="hero-landing">
-      <div class="hero-bg-year">2026</div>
-      <div class="hero-content">
-        <div class="hero-eyebrow" data-c="hero-eyebrow">
-          Reduce Eliminate Automate
-        </div>
-        <h1>
-          <span class="sun">Transforming</span><br />how we
-          <span class="accent">work</span> at
-          <span class="passion">NCBA</span>.
-        </h1>
-      </div>
-    </section>
+    <!-- UNIFIED LANDING GRID -->
+    <div class="landing-layout">
 
-    <!-- ASYMMETRIC GRID -->
-    <div class="grid-wrap">
-      <div class="bb-grid">
-        <!-- Panel A: top initiative (large, left, spans both rows) -->
-        <a href="spotlight.html">
-          <div class="panel panel-initiative" id="initiative-landing">
-            <div class="panel-label">Featured initiative</div>
-            <div class="initiative-art">
-              <img data-c="fi-image" alt="Document Approval, reimagined" />
-            </div>
-            <div class="initiative-body">
-              <h3 data-c="fi-title">Document Approval, reimagined</h3>
-              <p data-c="fi-body">
-                Here's the story behind the workflow that quietly changed how
-                the bank signs off on everything.
-              </p>
-
-              <a class="cta-link" data-c="fi-cta" href="spotlight.html">See the full story →</a>
-            </div>
+      <!-- TOP ROW: hero text left, video panel right -->
+      <div class="hero" id="hero-landing">
+        <div class="hero-bg-year">2026</div>
+        <div class="hero-content">
+          <div class="hero-eyebrow" data-c="hero-eyebrow">
+            Reduce Eliminate Automate
           </div>
-        </a>
-
-        <!-- Panel B: video slider (promoted above headlines, larger) -->
-        <div class="panel panel-video" id="video-landing">
-          <div class="panel-label">Video highlights</div>
-          <div class="video-slider">
-            <div class="video-track" id="videoTrack-landing">
-              <div class="video-slide" data-slide="0">
-                <img class="video-thumb" data-c="video-thumb-0" alt="H1 Summary" />
-                <div class="video-play"></div>
-                <div class="video-meta">
-                  <div class="tag" data-c="video-tag-0">H1 Summary · 1 min</div>
-                  <h4 data-c="video-title-0">Six months of REA, in one sitting</h4>
-                </div>
-              </div>
-
-              <div class="video-slide" data-slide="1">
-                <img class="video-thumb" data-c="video-thumb-1" alt="EVA Video" />
-                <div class="video-play"></div>
-                <div class="video-meta">
-                  <div class="tag" data-c="video-tag-1">EVA · 1 min</div>
-                  <h4 data-c="video-title-1">Inside the assistant powering REA</h4>
-                </div>
-              </div>
-            </div>
-            <button class="video-nav prev" onclick="moveSlide_landing(-1)" aria-label="Previous video">
-              ‹
-            </button>
-            <button class="video-nav next" onclick="moveSlide_landing(1)" aria-label="Next video">
-              ›
-            </button>
-          </div>
-          <div class="video-dots">
-            <span class="vdot active" onclick="goToSlide_landing(0)"></span>
-            <span class="vdot" onclick="goToSlide_landing(1)"></span>
-          </div>
-        </div>
-
-        <!-- Panel C: headline list, news-style (quieter, below video) -->
-        <div class="panel panel-headlines">
-          <div class="panel-label">Around the storyhub</div>
-          <div class="headline-list" id="list-storyhub">
-            <!-- Injected by js -->
-          </div>
+          <h1>
+            <span class="sun">Transforming</span><br />how we
+            <span class="accent">work</span> at
+            <span class="passion">NCBA</span>.
+          </h1>
         </div>
       </div>
+
+      <!-- Video panel sits to the right of the hero text -->
+      <div class="panel panel-video" id="video-landing">
+        <div class="panel-label">Video highlights</div>
+        <div class="video-slider">
+          <div class="video-track" id="videoTrack-landing">
+            <div class="video-slide" data-slide="0">
+              <img class="video-thumb" data-c="video-thumb-0" alt="H1 Summary" />
+              <div class="video-play"></div>
+              <div class="video-meta">
+                <div class="tag" data-c="video-tag-0">H1 Summary · 1 min</div>
+                <h4 data-c="video-title-0">Six months of REA, in one sitting</h4>
+              </div>
+            </div>
+            <div class="video-slide" data-slide="1">
+              <img class="video-thumb" data-c="video-thumb-1" alt="EVA Video" />
+              <div class="video-play"></div>
+              <div class="video-meta">
+                <div class="tag" data-c="video-tag-1">EVA · 1 min</div>
+                <h4 data-c="video-title-1">Inside the assistant powering REA</h4>
+              </div>
+            </div>
+          </div>
+          <button class="video-nav prev" onclick="moveSlide_landing(-1)" aria-label="Previous video">‹</button>
+          <button class="video-nav next" onclick="moveSlide_landing(1)" aria-label="Next video">›</button>
+        </div>
+        <div class="video-dots">
+          <span class="vdot active" onclick="goToSlide_landing(0)"></span>
+          <span class="vdot" onclick="goToSlide_landing(1)"></span>
+        </div>
+      </div>
+
+      <!-- BOTTOM ROW: featured initiative left, storyhub right — same height -->
+      <a href="spotlight.html">
+        <div class="panel panel-initiative" id="initiative-landing">
+          <div class="panel-label">Featured initiative</div>
+          <div class="initiative-art">
+            <img data-c="fi-image" alt="Document Approval, reimagined" />
+          </div>
+          <div class="initiative-body">
+            <h3 data-c="fi-title">Document Approval, reimagined</h3>
+            <p data-c="fi-body">
+              Here's the story behind the workflow that quietly changed how
+              the bank signs off on everything.
+            </p>
+            <a class="cta-link" data-c="fi-cta" href="spotlight.html">See the full story →</a>
+          </div>
+        </div>
+      </a>
+
+      <div class="panel panel-headlines">
+        <div class="panel-label">Around the storyhub</div>
+        <div class="headline-list" id="list-storyhub">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </div>
+    </div>
     </div>
 
     <!-- RESOLUTION -->

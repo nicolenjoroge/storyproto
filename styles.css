@@ -390,19 +390,72 @@ nav.masternav {
   }
 }
 
-#sec-landing .hero {
+/* #sec-landing .hero {
   position: relative;
   padding: 100px 48px 64px;
   background: transparent;
   overflow: hidden;
   z-index: 1;
+} */
+
+/* Unified landing layout — 2 columns, 2 rows */
+#sec-landing .landing-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  padding: 0 40px 40px;
 }
 
+/* TOP ROW — hero text left */
+#sec-landing .hero {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  padding: 48px 0 40px;
+  overflow: hidden;
+}
+
+/* TOP ROW — video panel right */
+#sec-landing .panel-video {
+  grid-column: 2;
+  grid-row: 1;
+  background: #0f0c0b;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* BOTTOM ROW — featured initiative left */
+#sec-landing .panel-initiative {
+  grid-column: 1;
+  grid-row: 2;
+  background: #0f0c0b;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* BOTTOM ROW — storyhub right, same height as initiative */
+#sec-landing .panel-headlines {
+  grid-column: 2;
+  grid-row: 2;
+  background: #0f0c0b;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  overflow: visible;
+  height: auto;
+}
+
+/* 2026 watermark — stays in hero, left side */
 #sec-landing .hero-bg-year {
   position: absolute;
   top: -40px;
-  right: -20px;
-  font-size: 340px;
+  left: -20px;
+  font-size: 300px;
   font-weight: bold;
   color: #fff;
   opacity: 0.04;
@@ -412,6 +465,10 @@ nav.masternav {
   user-select: none;
   z-index: 0;
 }
+
+/* Remove the old grid-wrap since it's no longer needed */
+#sec-landing .grid-wrap { display: contents; }
+
 
 #sec-landing .hero-content {
   position: relative;
@@ -448,18 +505,7 @@ nav.masternav {
   line-height: 1.6;
 }
 
-#sec-landing .grid-wrap {
-  padding: 8px 48px 64px;
-  position: relative;
-  z-index: 1;
-}
 
-#sec-landing .bb-grid {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  grid-template-rows: 1.3fr auto;
-  gap: 20px;
-}
 
 #sec-landing .panel {
   border-radius: 14px;
@@ -475,14 +521,14 @@ nav.masternav {
   padding: 16px 20px 0;
 }
 
-#sec-landing .panel-initiative {
+/* #sec-landing .panel-initiative {
   grid-column: 1;
   grid-row: 1 / span 2;
   background: #0f0c0b;
   border: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
-}
+} */
 
 #sec-landing .panel-initiative .panel-label {
   color: var(--sun-landing);
@@ -570,7 +616,7 @@ nav.masternav {
   width: fit-content;
 }
 
-#sec-landing .panel-video {
+/* #sec-landing .panel-video {
   grid-column: 2;
   grid-row: 1;
   background: #0f0c0b;
@@ -578,7 +624,7 @@ nav.masternav {
   min-height: 260px;
   display: flex;
   flex-direction: column;
-}
+} */
 
 #sec-landing .panel-video .panel-label {
   color: var(--sun-landing);
@@ -707,12 +753,12 @@ nav.masternav {
   background: var(--sun-landing);
 }
 
-#sec-landing .panel-headlines {
+/* #sec-landing .panel-headlines {
   grid-column: 2;
   grid-row: 2;
   background: #0f0c0b;
   border: 1px solid rgba(255, 255, 255, 0.06);
-}
+} */
 
 #sec-landing .panel-headlines .panel-label {
   color: var(--passion-landing);
@@ -888,10 +934,6 @@ nav.masternav {
     padding: 8px 20px 48px;
   }
 
-  #sec-landing .bb-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
 
   #sec-landing .panel-initiative {
     grid-column: 1;
@@ -4175,9 +4217,7 @@ nav.masternav {
     padding: 8px 16px 40px;
   }
 
-  #sec-landing .bb-grid {
-    gap: 14px;
-  }
+
 
   #sec-landing .marquee-item {
     font-size: 15px;
@@ -4240,11 +4280,11 @@ nav.masternav {
       panels stack in source order at full width.
    --------------------------------------------------------------------- */
 @media (max-width: 900px) {
-  #sec-landing .bb-grid {
+  /* #sec-landing .bb-grid {
     display: flex;
     flex-direction: column;
     gap: 20px;
-  }
+  } */
 
   #sec-landing .panel-initiative,
   #sec-landing .panel-video,
