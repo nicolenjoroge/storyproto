@@ -74,14 +74,13 @@ export function scrollToSection(id) {
   setTimeout(() => {
     section.classList.remove('highlight-section', 'sparkle-active');
   }, 2000);
+  
   // After scroll animation completes, find and play the video inside
   setTimeout(() => {
     const video = section.querySelector('video');
     if (video) {
       video.currentTime = 0;   // rewind to start
       video.play().catch(() => {
-        // Autoplay blocked by browser — silently ignore
-        // user can still click play manually
       });
     }
   }, 800);
