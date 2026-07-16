@@ -1286,7 +1286,7 @@ nav.masternav {
 }
 
 #sec-reastory .slim-eyebrow {
-  font-size: 13px;
+  font-size: 20px;
   font-weight: bold;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1985,7 +1985,7 @@ nav.masternav {
 }
 
 #sec-innovation .slim-eyebrow {
-  font-size: 13px;
+  font-size: 20px;
   font-weight: bold;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -2858,7 +2858,7 @@ nav.masternav {
   top: 24px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 12px;
+  font-size: 20px;
   font-weight: bold;
   letter-spacing: 3px;
   text-transform: uppercase;
