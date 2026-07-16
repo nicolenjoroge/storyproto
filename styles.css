@@ -1320,8 +1320,9 @@ nav.masternav {
 
 #sec-reastory .stage {
   position: relative;
-  height: 660px;
-  overflow: hidden;
+  min-height: 500px;
+  height: auto;
+  overflow: visible;
   margin: 0 48px 56px;
   border-radius: 18px;
   box-shadow: 0 1px 3px rgba(57, 48, 45, 0.06);
@@ -1329,7 +1330,7 @@ nav.masternav {
 
 #sec-reastory .stage-track {
   display: flex;
-  height: 100%;
+  height: auto;
   width: 200%;
   will-change: transform;
   transition: transform 0.05s linear;
@@ -1337,7 +1338,7 @@ nav.masternav {
 
 #sec-reastory .stage-panel {
   flex: 0 0 50%;
-  height: 100%;
+  height: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -3619,7 +3620,7 @@ nav.masternav {
 }
 
 #sec-whatsnew .slim-eyebrow {
-  font-size: 13px;
+  font-size: 20px;
   font-weight: bold;
   letter-spacing: 2px;
   text-transform: uppercase;
