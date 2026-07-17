@@ -1355,6 +1355,7 @@ nav.masternav {
 /* Make BPM photo container identical to REA photo container */
 /* Override BPM panel grid to add a bottom row for stream cards */
 #sec-reastory .panel-bpm {
+  background: #fff;
   grid-template-rows: 1fr auto;
   align-items: start;
   padding-top: 40px;
@@ -1535,9 +1536,7 @@ nav.masternav {
   max-width: 440px;
 }
 
-#sec-reastory .panel-bpm {
-  background: #faf8f5;
-}
+
 
 #sec-reastory .panel-bpm .copy {
   padding-right: 40px;
