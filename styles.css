@@ -1331,13 +1331,13 @@ nav.masternav {
 #sec-reastory .stage-track {
   display: flex;
   height: auto;
-  width: 200%;
+  width: auto;
   will-change: transform;
   transition: transform 0.05s linear;
 }
 
 #sec-reastory .stage-panel {
-  flex: 0 0 50%;
+  flex: 0 0 88%;
   height: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2062,9 +2062,9 @@ nav.masternav {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: rgba(255, 196, 0, 0.08);
+  border: 1px solid rgba(255, 196, 0, 0.15);
+  color: #ffc400;
   font-size: 16px;
   display: flex;
   align-items: center;

@@ -20,7 +20,7 @@
     <div class="masternav-links">
       <a href="#sec-landing" class="masternav-link active" data-target="sec-landing">Home</a>
       <a href="#sec-reastory" class="masternav-link" data-target="sec-reastory">REA Story</a>
-      <a href="#sec-innovation" class="masternav-link" data-target="sec-innovation">Innovation Gallery</a>
+      <a href="#sec-innovation" class="masternav-link" data-target="sec-innovation">Innovation Delivery</a>
       <a href="#sec-spotlight" class="masternav-link" data-target="sec-spotlight">Spotlight</a>
       <a href="#sec-whatsnew" class="masternav-link" data-target="sec-whatsnew">What's New</a>
       <a href="https://brave-moss-0a960c803.7.azurestaticapps.net/" class="masternav-dashboard-btn" target="_blank">
@@ -41,16 +41,7 @@
       <div class="depth-shard s5" data-speed="0.05"></div>
     </div>
 
-    <!-- Scroll progress: maps which landing beat you're in -->
-    <div class="depth-progress" id="depthProgress-landing">
-      <div class="pf-shard active" data-target="hero-landing"></div>
-      <div class="pf-line"></div>
-      <div class="pf-shard" data-target="initiative-landing"></div>
-      <div class="pf-line"></div>
-      <div class="pf-shard" data-target="video-landing"></div>
-      <div class="pf-line"></div>
-      <div class="pf-shard" data-target="resolution-landing"></div>
-    </div>
+    
 
     <!-- MARQUEE: bigger, bolder -->
     <div class="marquee-wrap">
@@ -284,15 +275,6 @@
       <div class="depth-shard s5" data-speed="0.05"></div>
     </div>
 
-    <div class="depth-progress" id="depthProgress-innovation">
-      <div class="pf-shard active" data-target="top-innovation"></div>
-      <div class="pf-line"></div>
-      <div class="pf-shard" data-target="deployed-innovation"></div>
-      <div class="pf-line"></div>
-      <div class="pf-shard" data-target="soon-innovation"></div>
-      <div class="pf-line"></div>
-      <div class="pf-shard" data-target="vids-innovation"></div>
-    </div>
 
     <section class="slim-header">
       <div class="slim-eyebrow">Innovation Gallery</div>
@@ -305,7 +287,7 @@
     <section class="row" id="top-innovation">
       <div class="row-head">
         <div>
-          <div class="row-label">Highest impact</div>
+          <div class="row-label">Most Impactful</div>
           <div class="row-title">Top initiatives</div>
         </div>
         <!-- <div class="row-note">Ranked by impact, editorially curated</div> -->
@@ -571,7 +553,7 @@
       <!-- SPOTLIGHT CARD: editorially chosen, not date-bound -->
       <div class="spot-card">
         <div class="spot-body">
-          <div class="spot-tag"><span class="dot"></span> Editor's pick</div>
+          <div class="spot-tag"><span class="dot"></span> Eliminated? </div>
           <h2 data-c="wn-pick-heading">
             With the new DocuSign integration, NCBA Now eliminates the need to print, sign, and scan documents.
           </h2>
@@ -598,7 +580,7 @@
     <div class="card-modal" onclick="event.stopPropagation()">
       <button class="card-modal-close" onclick="closeCardModal()">✕</button>
       <div class="card-modal-body">
-        <div class="card-modal-tag" id="cardModalTag"></div>
+        <!-- <div class="card-modal-tag" id="cardModalTag"></div> -->
         <h3 class="card-modal-title" id="cardModalTitle"></h3>
         <p class="card-modal-desc" id="cardModalDesc"></p>
         <div class="card-modal-stats" id="cardModalStats"></div>
@@ -607,6 +589,7 @@
   </div>
   <script src="/js/env.js"></script>
   <script type="module" src="/js/main.js"></script>
+  
 </body>
 
 </html>

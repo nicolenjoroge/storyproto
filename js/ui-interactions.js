@@ -6,9 +6,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 function easeInOutCubic(t) {
-  return t < 0.5
-    ? 4 * t * t * t
-    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
 function smoothScrollTo(targetY, duration) {
@@ -29,10 +27,10 @@ function smoothScrollTo(targetY, duration) {
 
 function initSmoothScroll() {
   // Intercept all anchor clicks and apply smooth scroll
-  document.addEventListener('click', function (e) {
+  document.addEventListener("click", function (e) {
     const anchor = e.target.closest('a[href^="#"]');
     if (!anchor) return;
-    const id = anchor.getAttribute('href').slice(1);
+    const id = anchor.getAttribute("href").slice(1);
     const target = document.getElementById(id);
     if (!target) return;
     e.preventDefault();
@@ -43,18 +41,21 @@ function initSmoothScroll() {
 
 function initScrollReveal() {
   // Sections fade and slide up as they enter the viewport
-  const revealTargets = document.querySelectorAll('.page-section');
+  const revealTargets = document.querySelectorAll(".page-section");
 
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('section-visible');
-        revealObserver.unobserve(entry.target); // only animate once
-      }
-    });
-  }, { threshold: 0.08 });
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("section-visible");
+          revealObserver.unobserve(entry.target); // only animate once
+        }
+      });
+    },
+    { threshold: 0.08 },
+  );
 
-  revealTargets.forEach(el => revealObserver.observe(el));
+  revealTargets.forEach((el) => revealObserver.observe(el));
 }
 
 // Global helper — inline HTML uses onclick="scrollToSection('...')"
@@ -63,25 +64,24 @@ export function scrollToSection(id) {
   if (!section) return;
 
   // Pause all other videos first
-  document.querySelectorAll('.vid-video').forEach(v => {
-    if (v.closest('.vid-card-lg')?.id !== id) {
+  document.querySelectorAll(".vid-video").forEach((v) => {
+    if (v.closest(".vid-card-lg")?.id !== id) {
       v.pause();
     }
   });
-  
-  section.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  section.classList.add('highlight-section', 'sparkle-active');
+
+  section.scrollIntoView({ behavior: "smooth", block: "center" });
+  section.classList.add("highlight-section", "sparkle-active");
   setTimeout(() => {
-    section.classList.remove('highlight-section', 'sparkle-active');
+    section.classList.remove("highlight-section", "sparkle-active");
   }, 2000);
-  
+
   // After scroll animation completes, find and play the video inside
   setTimeout(() => {
-    const video = section.querySelector('video');
+    const video = section.querySelector("video");
     if (video) {
-      video.currentTime = 0;   // rewind to start
-      video.play().catch(() => {
-      });
+      video.currentTime = 0; // rewind to start
+      video.play().catch(() => {});
     }
   }, 800);
 }
@@ -92,7 +92,7 @@ window.scrollToSection = scrollToSection;
 // ═══════════════════════════════════════════════════════════════════════════
 
 function initNavHighlight() {
-  const links = document.querySelectorAll('.masternav-link');
+  const links = document.querySelectorAll(".masternav-link");
   const targets = Array.from(links).map((a) =>
     document.getElementById(a.dataset.target),
   );
@@ -104,10 +104,10 @@ function initNavHighlight() {
         activeIdx = i;
       }
     });
-    links.forEach((a, i) => a.classList.toggle('active', i === activeIdx));
+    links.forEach((a, i) => a.classList.toggle("active", i === activeIdx));
   }
 
-  window.addEventListener('scroll', onScrollNav, { passive: true });
+  window.addEventListener("scroll", onScrollNav, { passive: true });
   onScrollNav();
 }
 
@@ -119,18 +119,18 @@ export function bindScrollDots(scrollEl, dotsEl, itemWidth) {
   if (!scrollEl || !dotsEl) return;
 
   function updateDots() {
-    const dots = dotsEl.querySelectorAll('.sdot');
+    const dots = dotsEl.querySelectorAll(".sdot");
     const idx = Math.round(scrollEl.scrollLeft / itemWidth);
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle("active", i === idx));
   }
 
-  dotsEl.querySelectorAll('.sdot').forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      scrollEl.scrollTo({ left: i * itemWidth, behavior: 'smooth' });
+  dotsEl.querySelectorAll(".sdot").forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      scrollEl.scrollTo({ left: i * itemWidth, behavior: "smooth" });
     });
   });
 
-  scrollEl.addEventListener('scroll', updateDots, { passive: true });
+  scrollEl.addEventListener("scroll", updateDots, { passive: true });
   updateDots();
 }
 window.bindScrollDots = bindScrollDots;
@@ -139,19 +139,21 @@ export function bindShelfArrows(scrollEl, leftBtn, rightBtn, itemWidth) {
   if (!scrollEl || !leftBtn || !rightBtn) return;
 
   function update() {
-    leftBtn.classList.toggle('is-hidden', scrollEl.scrollLeft <= 0);
-    rightBtn.classList.toggle('is-hidden',
-      scrollEl.scrollLeft >= scrollEl.scrollWidth - scrollEl.clientWidth - 4);
+    leftBtn.classList.toggle("is-hidden", scrollEl.scrollLeft <= 0);
+    rightBtn.classList.toggle(
+      "is-hidden",
+      scrollEl.scrollLeft >= scrollEl.scrollWidth - scrollEl.clientWidth - 4,
+    );
   }
 
-  leftBtn.addEventListener('click', () => {
-    scrollEl.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+  leftBtn.addEventListener("click", () => {
+    scrollEl.scrollBy({ left: -itemWidth, behavior: "smooth" });
   });
-  rightBtn.addEventListener('click', () => {
-    scrollEl.scrollBy({ left: itemWidth, behavior: 'smooth' });
+  rightBtn.addEventListener("click", () => {
+    scrollEl.scrollBy({ left: itemWidth, behavior: "smooth" });
   });
 
-  scrollEl.addEventListener('scroll', update, { passive: true });
+  scrollEl.addEventListener("scroll", update, { passive: true });
   update();
 }
 // ═══════════════════════════════════════════════════════════════════════════
@@ -159,18 +161,25 @@ export function bindShelfArrows(scrollEl, leftBtn, rightBtn, itemWidth) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function initSpotlightConfetti() {
-  const canvas = document.getElementById('spotlight-confetti');
+  const canvas = document.getElementById("spotlight-confetti");
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
 
-  const COLOURS = ['#f8e200', '#3ab3e5', '#9f197e', '#00a8a9', '#ffffff', '#e4032c'];
-  const SHAPES = ['circle', 'rect', 'diamond', 'line'];
+  const COLOURS = [
+    "#f8e200",
+    "#3ab3e5",
+    "#9f197e",
+    "#00a8a9",
+    "#ffffff",
+    "#e4032c",
+  ];
+  const SHAPES = ["circle", "rect", "diamond", "line"];
 
   let particles = [];
   let W, H, animId;
 
   function resize() {
-    const section = document.getElementById('sec-spotlight');
+    const section = document.getElementById("sec-spotlight");
     W = canvas.width = section.offsetWidth;
     H = canvas.height = section.offsetHeight;
   }
@@ -197,7 +206,7 @@ function initSpotlightConfetti() {
 
   function init() {
     resize();
-    particles = Array.from({ length: 160 }, makeParticle).map(p => ({
+    particles = Array.from({ length: 160 }, makeParticle).map((p) => ({
       ...p,
       y: randomBetween(0, H),
     }));
@@ -216,15 +225,15 @@ function initSpotlightConfetti() {
     ctx.shadowBlur = 4 + shimmerAmt * 14;
 
     switch (p.shape) {
-      case 'circle':
+      case "circle":
         ctx.beginPath();
         ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
         ctx.fill();
         break;
-      case 'rect':
+      case "rect":
         ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
         break;
-      case 'diamond':
+      case "diamond":
         ctx.beginPath();
         ctx.moveTo(0, -p.size / 2);
         ctx.lineTo(p.size / 2, 0);
@@ -233,7 +242,7 @@ function initSpotlightConfetti() {
         ctx.closePath();
         ctx.fill();
         break;
-      case 'line':
+      case "line":
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.moveTo(-p.size, 0);
@@ -248,7 +257,7 @@ function initSpotlightConfetti() {
   function tick() {
     ctx.clearRect(0, 0, W, H);
 
-    particles.forEach(p => {
+    particles.forEach((p) => {
       drawParticle(p);
       p.y += p.speedY;
       p.x += p.speedX;
@@ -263,59 +272,67 @@ function initSpotlightConfetti() {
     animId = requestAnimationFrame(tick);
   }
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        if (!animId) tick();
-      } else {
-        cancelAnimationFrame(animId);
-        animId = null;
-      }
-    });
-  }, { threshold: 0.05 });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          if (!animId) tick();
+        } else {
+          cancelAnimationFrame(animId);
+          animId = null;
+        }
+      });
+    },
+    { threshold: 0.05 },
+  );
 
-  window.addEventListener('resize', () => { resize(); });
+  window.addEventListener("resize", () => {
+    resize();
+  });
 
   init();
-  observer.observe(document.getElementById('sec-spotlight'));
+  observer.observe(document.getElementById("sec-spotlight"));
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
 // REA STORY: STAGE PANEL SWITCHER
 // ═══════════════════════════════════════════════════════════════════════════
 
-
 function initReaStoryStage() {
-  const track = document.getElementById('stageTrack-reastory');
+  const track = document.getElementById("stageTrack-reastory");
   if (!track) return;
 
   const axPips = [
-    document.getElementById('axPip0-reastory'),
-    document.getElementById('axPip1-reastory'),
+    document.getElementById("axPip0-reastory"),
+    document.getElementById("axPip1-reastory"),
   ];
   const axPipsTop = [
-    document.getElementById('axPip0Top-reastory'),
-    document.getElementById('axPip1Top-reastory'),
+    document.getElementById("axPip0Top-reastory"),
+    document.getElementById("axPip1Top-reastory"),
   ];
   const axLabels = [
-    document.getElementById('axLabel0-reastory'),
-    document.getElementById('axLabel1-reastory'),
+    document.getElementById("axLabel0-reastory"),
+    document.getElementById("axLabel1-reastory"),
   ];
   const dots = [
-    document.getElementById('dot0-reastory'),
-    document.getElementById('dot1-reastory'),
+    document.getElementById("dot0-reastory"),
+    document.getElementById("dot1-reastory"),
   ];
-  const leftArrow = document.getElementById('stageLeft-reastory');
-  const rightArrow = document.getElementById('stageRight-reastory');
+  const leftArrow = document.getElementById("stageLeft-reastory");
+  const rightArrow = document.getElementById("stageRight-reastory");
 
   let idx = 0;
 
   function render() {
-    track.style.transform = `translateX(-${idx * 50}%)`;
-    axPips.forEach((p, i) => p && p.classList.toggle('lit', i === idx));
-    axPipsTop.forEach((p, i) => p && p.classList.toggle('lit', i === idx));
-    axLabels.forEach((l, i) => l && l.classList.toggle('active', i === idx));
-    dots.forEach((d, i) => d && d.classList.toggle('active', i === idx));
+    const track = document.querySelector("#sec-reastory .stage-track");
+    const maxShift = track.scrollWidth - track.parentElement.clientWidth;
+
+    const progress = idx === 0 ? 0 : 1;
+    track.style.transform = `translateX(${-progress * maxShift}px)`;
+    axPips.forEach((p, i) => p && p.classList.toggle("lit", i === idx));
+    axPipsTop.forEach((p, i) => p && p.classList.toggle("lit", i === idx));
+    axLabels.forEach((l, i) => l && l.classList.toggle("active", i === idx));
+    dots.forEach((d, i) => d && d.classList.toggle("active", i === idx));
     if (leftArrow) leftArrow.disabled = idx === 0;
     if (rightArrow) rightArrow.disabled = idx === 1;
   }
@@ -326,9 +343,11 @@ function initReaStoryStage() {
   }
   window.switchPanel = switchPanel;
 
-  if (leftArrow) leftArrow.addEventListener('click', () => switchPanel(0));
-  if (rightArrow) rightArrow.addEventListener('click', () => switchPanel(1));
-  dots.forEach((d, i) => d && d.addEventListener('click', () => switchPanel(i)));
+  if (leftArrow) leftArrow.addEventListener("click", () => switchPanel(0));
+  if (rightArrow) rightArrow.addEventListener("click", () => switchPanel(1));
+  dots.forEach(
+    (d, i) => d && d.addEventListener("click", () => switchPanel(i)),
+  );
 
   render();
 }
@@ -338,14 +357,14 @@ function initReaStoryStage() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function initLandingParallax() {
-  const shards = document.querySelectorAll('.depth-shard');
+  const shards = document.querySelectorAll(".depth-shard");
   const sections = [
-    'hero-landing',
-    'initiative-landing',
-    'video-landing',
-    'resolution-landing',
+    "hero-landing",
+    "initiative-landing",
+    "video-landing",
+    "resolution-landing",
   ].map((id) => document.getElementById(id));
-  const markers = document.querySelectorAll('.pf-shard');
+  const markers = document.querySelectorAll(".pf-shard");
 
   function onScroll() {
     const y = window.scrollY;
@@ -359,17 +378,17 @@ function initLandingParallax() {
         activeIdx = i;
       }
     });
-    markers.forEach((m, i) => m.classList.toggle('active', i === activeIdx));
+    markers.forEach((m, i) => m.classList.toggle("active", i === activeIdx));
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
   markers.forEach((m) => {
-    m.addEventListener('click', () => {
+    m.addEventListener("click", () => {
       const target = document.getElementById(m.dataset.target);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      if (target) target.scrollIntoView({ behavior: "smooth" });
     });
-    m.style.cursor = 'pointer';
+    m.style.cursor = "pointer";
   });
 }
 
@@ -378,12 +397,12 @@ function initLandingVideoSlider() {
   const totalSlides = 2;
 
   function updateSlider() {
-    const track = document.getElementById('videoTrack-landing');
+    const track = document.getElementById("videoTrack-landing");
     if (!track) return;
     track.style.transform = `translateX(-${slideIndex * 100}%)`;
     document
-      .querySelectorAll('.vdot')
-      .forEach((d, i) => d.classList.toggle('active', i === slideIndex));
+      .querySelectorAll(".vdot")
+      .forEach((d, i) => d.classList.toggle("active", i === slideIndex));
   }
 
   function moveSlide(dir) {
@@ -406,8 +425,8 @@ function initLandingVideoSlider() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function initInnovationVideoZoom() {
-  const vzInner = document.getElementById('videoZoomInner-innovation');
-  const vzSpacer = document.getElementById('vids-innovation');
+  const vzInner = document.getElementById("videoZoomInner-innovation");
+  const vzSpacer = document.getElementById("vids-innovation");
   if (!vzInner || !vzSpacer) return;
 
   function onVideoZoomScroll() {
@@ -420,20 +439,20 @@ function initInnovationVideoZoom() {
     vzInner.style.transform = `scale(${scale})`;
     vzInner.style.opacity = opacity;
   }
-  window.addEventListener('scroll', onVideoZoomScroll, { passive: true });
-  window.addEventListener('resize', onVideoZoomScroll);
+  window.addEventListener("scroll", onVideoZoomScroll, { passive: true });
+  window.addEventListener("resize", onVideoZoomScroll);
   onVideoZoomScroll();
 }
 
 function initInnovationParallax() {
-  const shards = document.querySelectorAll('.depth-shard');
+  const shards = document.querySelectorAll(".depth-shard");
   const sections = [
-    'top-innovation',
-    'deployed-innovation',
-    'soon-innovation',
-    'vids-innovation',
+    "top-innovation",
+    "deployed-innovation",
+    "soon-innovation",
+    "vids-innovation",
   ].map((id) => document.getElementById(id));
-  const markers = document.querySelectorAll('.pf-shard');
+  const markers = document.querySelectorAll(".pf-shard");
 
   function onScroll() {
     const y = window.scrollY;
@@ -447,15 +466,15 @@ function initInnovationParallax() {
         activeIdx = i;
       }
     });
-    markers.forEach((m, i) => m.classList.toggle('active', i === activeIdx));
+    markers.forEach((m, i) => m.classList.toggle("active", i === activeIdx));
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
   markers.forEach((m) => {
-    m.addEventListener('click', () => {
+    m.addEventListener("click", () => {
       const target = document.getElementById(m.dataset.target);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      if (target) target.scrollIntoView({ behavior: "smooth" });
     });
   });
 }
@@ -465,10 +484,10 @@ function initInnovationParallax() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function initSpotlightActNav() {
-  const acts = document.querySelectorAll('.sl-act');
-  const dots = document.querySelectorAll('.sl-vert-dot');
-  const btnUp = document.getElementById('actUp-spotlight');
-  const btnDown = document.getElementById('actDown-spotlight');
+  const acts = document.querySelectorAll(".sl-act");
+  const dots = document.querySelectorAll(".sl-vert-dot");
+  const btnUp = document.getElementById("actUp-spotlight");
+  const btnDown = document.getElementById("actDown-spotlight");
   if (!btnUp || !btnDown) return;
 
   let currentAct = 0;
@@ -477,26 +496,26 @@ function initSpotlightActNav() {
   function showAct(idx) {
     currentAct = Math.max(0, Math.min(totalActs - 1, idx));
     acts.forEach((a) =>
-      a.classList.toggle('active', parseInt(a.dataset.act) === currentAct),
+      a.classList.toggle("active", parseInt(a.dataset.act) === currentAct),
     );
     dots.forEach((d) =>
-      d.classList.toggle('active', parseInt(d.dataset.act) === currentAct),
+      d.classList.toggle("active", parseInt(d.dataset.act) === currentAct),
     );
     btnUp.disabled = currentAct === 0;
     btnDown.disabled = currentAct === totalActs - 1;
   }
 
-  btnUp.addEventListener('click', () => showAct(currentAct - 1));
-  btnDown.addEventListener('click', () => showAct(currentAct + 1));
+  btnUp.addEventListener("click", () => showAct(currentAct - 1));
+  btnDown.addEventListener("click", () => showAct(currentAct + 1));
   dots.forEach((d) =>
-    d.addEventListener('click', () => showAct(parseInt(d.dataset.act))),
+    d.addEventListener("click", () => showAct(parseInt(d.dataset.act))),
   );
   showAct(0);
 }
 
 function initSpotlightTestimonials() {
-  const testiViewport = document.getElementById('testiViewport-spotlight');
-  const testiTrack = document.getElementById('testiTrack-spotlight');
+  const testiViewport = document.getElementById("testiViewport-spotlight");
+  const testiTrack = document.getElementById("testiTrack-spotlight");
   if (!testiViewport || !testiTrack) return;
 
   let testiOffset = 0;
@@ -512,27 +531,44 @@ function initSpotlightTestimonials() {
     requestAnimationFrame(testiStep);
   }
 
-  testiViewport.addEventListener('mouseenter', () => (testiPaused = true));
-  testiViewport.addEventListener('mouseleave', () => (testiPaused = false));
+  testiViewport.addEventListener("mouseenter", () => (testiPaused = true));
+  testiViewport.addEventListener("mouseleave", () => (testiPaused = false));
   requestAnimationFrame(testiStep);
 }
 
-
 const FALLBACK_PEOPLE_DATA = [
-  { name: 'Team member', contribution: 'Submitted the idea behind Document Approval', tag: 'Submitter' },
-  { name: 'Team member', contribution: 'Built the Etims invoice automation', tag: 'Builder' },
-  { name: 'Team member', contribution: 'Champion for AI Credit Memo across teams', tag: 'Champion' },
-  { name: 'Team member', contribution: 'First to pilot the FX Pre Trade checks', tag: 'Pilot' },
+  {
+    name: "Team member",
+    contribution: "Submitted the idea behind Document Approval",
+    tag: "Submitter",
+  },
+  {
+    name: "Team member",
+    contribution: "Built the Etims invoice automation",
+    tag: "Builder",
+  },
+  {
+    name: "Team member",
+    contribution: "Champion for AI Credit Memo across teams",
+    tag: "Champion",
+  },
+  {
+    name: "Team member",
+    contribution: "First to pilot the FX Pre Trade checks",
+    tag: "Pilot",
+  },
 ];
 
 function initSpotlightPeople() {
-  const peopleName = document.getElementById('peopleName-spotlight');
-  const peopleContribution = document.getElementById('peopleContribution-spotlight');
-  const peopleTag = document.getElementById('peopleTag-spotlight');
-  const peopleCounter = document.getElementById('peopleCounter-spotlight');
-  const peopleCard = document.getElementById('peopleCard-spotlight');
-  const leftBtn = document.getElementById('peopleLeft-spotlight');
-  const rightBtn = document.getElementById('peopleRight-spotlight');
+  const peopleName = document.getElementById("peopleName-spotlight");
+  const peopleContribution = document.getElementById(
+    "peopleContribution-spotlight",
+  );
+  const peopleTag = document.getElementById("peopleTag-spotlight");
+  const peopleCounter = document.getElementById("peopleCounter-spotlight");
+  const peopleCard = document.getElementById("peopleCard-spotlight");
+  const leftBtn = document.getElementById("peopleLeft-spotlight");
+  const rightBtn = document.getElementById("peopleRight-spotlight");
   if (!peopleCard || !leftBtn || !rightBtn) return;
 
   const peopleData = window.__spotlightPeopleData || FALLBACK_PEOPLE_DATA;
@@ -550,11 +586,11 @@ function initSpotlightPeople() {
     }, 150);
   }
 
-  leftBtn.addEventListener('click', () => {
+  leftBtn.addEventListener("click", () => {
     peopleIdx = (peopleIdx - 1 + peopleData.length) % peopleData.length;
     renderPerson();
   });
-  rightBtn.addEventListener('click', () => {
+  rightBtn.addEventListener("click", () => {
     peopleIdx = (peopleIdx + 1) % peopleData.length;
     renderPerson();
   });
@@ -565,38 +601,39 @@ function initSpotlightPeople() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 export function openCardModal({ tag, title, description, image }) {
-  document.getElementById('cardModalTag').textContent   = tag || '';
-  document.getElementById('cardModalTitle').textContent = title || '';
-  document.getElementById('cardModalDesc').textContent  = description || 'More details coming soon.';
+  document.getElementById("cardModalTag").textContent = tag || "";
+  document.getElementById("cardModalTitle").textContent = title || "";
+  document.getElementById("cardModalDesc").textContent =
+    description || "More details coming soon.";
   // document.getElementById('cardModalImage').src = image || '';
 
-  document.getElementById('cardModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.getElementById("cardModal").classList.add("open");
+  document.body.style.overflow = "hidden";
 }
 
 export function closeCardModal() {
-  document.getElementById('cardModal').classList.remove('open');
-  document.body.style.overflow = '';
+  document.getElementById("cardModal").classList.remove("open");
+  document.body.style.overflow = "";
 }
 
 export function openCardFromEl(el) {
   const stats = el.dataset.stats ? JSON.parse(el.dataset.stats) : [];
   openCardModal({
-    tag:         el.dataset.tag,
-    title:       el.dataset.title,
+    tag: el.dataset.tag,
+    title: el.dataset.title,
     description: el.dataset.description,
-    image:       el.dataset.image,
-    stats
+    image: el.dataset.image,
+    stats,
   });
 }
 
 function initCardModal() {
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeCardModal();
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeCardModal();
   });
 }
 
-window.openCardModal  = openCardModal;
+window.openCardModal = openCardModal;
 window.closeCardModal = closeCardModal;
 window.openCardFromEl = openCardFromEl;
 
@@ -607,21 +644,22 @@ window.openCardFromEl = openCardFromEl;
 // 'contentReady' event rather than assuming cards already exist in the DOM.
 
 function initVideoPlayButtons() {
-  document.addEventListener('contentReady', function () {
-    document.querySelectorAll('.vid-card-lg').forEach(function (card) {
-      const video = card.querySelector('.vid-video');
-      const playBtn = card.querySelector('.vid-play-lg');
+  document.addEventListener("contentReady", function () {
+    document.querySelectorAll(".vid-card-lg").forEach(function (card) {
+      const video = card.querySelector(".vid-video");
+      const playBtn = card.querySelector(".vid-play-lg");
       if (!video || !playBtn) return;
-      playBtn.addEventListener('click', function () {
+      playBtn.addEventListener("click", function () {
         video.controls = true;
         video.play();
-        playBtn.style.display = 'none';
+        playBtn.style.display = "none";
       });
-      video.addEventListener('pause', function () {
-        if (video.currentTime > 0 && !video.ended) playBtn.style.display = 'flex';
+      video.addEventListener("pause", function () {
+        if (video.currentTime > 0 && !video.ended)
+          playBtn.style.display = "flex";
       });
-      video.addEventListener('ended', function () {
-        playBtn.style.display = 'flex';
+      video.addEventListener("ended", function () {
+        playBtn.style.display = "flex";
       });
     });
   });
