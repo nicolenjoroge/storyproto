@@ -587,7 +587,7 @@
             <path d="M10 12.5L5.5 8l4.5-4.5" stroke="currentColor" stroke-width="1.6"
                   stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Innovation Portfolio
+          Innovation Delivery
         </a>
         <span class="nav-panel-label" id="nav-panel-label">Spotlight</span>
       </div>
@@ -709,7 +709,7 @@
 
     <script src="/js/env.js"></script>
     <script>
-function getBase() { return window.CONTENT_BASE_URL || ''; }
+      function getBase() { return window.CONTENT_BASE_URL || ''; }
       const PANEL_TITLES = ['The story', "Who's using it", 'Inside the product', "What's next"];
 
       // ── MOCK ────────────────────────────────────────────────────
@@ -757,7 +757,7 @@ function getBase() { return window.CONTENT_BASE_URL || ''; }
       async function loadInitiative() {
         try {
           const manifest = await fetch(`${getBase()}/content/manifest.json`).then(r => r.json());
-const data     = await fetch(`${getBase()}/content/published/${manifest.current}.json`).then(r => r.json());
+          const data = await fetch(`${getBase()}/content/published/${manifest.liveVersion}.json`).then(r => r.json());
           const items    = data.innovation?.topInitiatives?.items || [];
           const item     = items.find(i => i.featured) || items.find(i => i.rank === 1) || items[0];
           console.log('[spotlight] item found:', item?.title);
@@ -778,7 +778,7 @@ const data     = await fetch(`${getBase()}/content/published/${manifest.current}
         const media  = item.media   || [];
 
         // Cold open
-        set('intro-eyebrow', story.eyebrow || 'Highest impact · #1 deployed initiative');
+        set('intro-eyebrow', story.eyebrow || '');
         unskel('intro-title'); set('intro-title', item.title || '');
         unskel('intro-sub');
         const previewBody = story.body || '';

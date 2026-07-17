@@ -5,6 +5,7 @@ import { bindScrollDots, bindShelfArrows } from './ui-interactions.js';
 //Render the Innovation section
 export function renderInnovation(inn) {
   if (!inn) return;
+ 
   setText('[data-c="inn-sub"]', inn.sectionSub);
   renderTopInitiatives(inn.topInitiatives);
   renderDeployed(inn.deployed);
