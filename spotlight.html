@@ -757,7 +757,7 @@
       async function loadInitiative() {
         try {
           const manifest = await fetch(`${getBase()}/content/manifest.json`).then(r => r.json());
-          const data = await fetch(`${getBase()}/content/published/${manifest.liveVersion}.json`).then(r => r.json());
+          const data = await fetch(`${getBase()}/content/published/v${manifest.liveVersion}.json`).then(r => r.json());
           const items    = data.innovation?.topInitiatives?.items || [];
           const item     = items.find(i => i.featured) || items.find(i => i.rank === 1) || items[0];
           console.log('[spotlight] item found:', item?.title);
