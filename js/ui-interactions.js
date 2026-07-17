@@ -601,7 +601,7 @@ function initSpotlightPeople() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 export function openCardModal({ tag, title, description, image }) {
-  document.getElementById("cardModalTag").textContent = tag || "";
+  // document.getElementById("cardModalTag").textContent = tag || "";
   document.getElementById("cardModalTitle").textContent = title || "";
   document.getElementById("cardModalDesc").textContent =
     description || "More details coming soon.";
@@ -619,7 +619,7 @@ export function closeCardModal() {
 export function openCardFromEl(el) {
   const stats = el.dataset.stats ? JSON.parse(el.dataset.stats) : [];
   openCardModal({
-    tag: el.dataset.tag,
+    // tag: el.dataset.tag,
     title: el.dataset.title,
     description: el.dataset.description,
     image: el.dataset.image,
