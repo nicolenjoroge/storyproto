@@ -2062,8 +2062,8 @@ nav.masternav {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 196, 0, 0.08);
-  border: 1px solid rgba(255, 196, 0, 0.15);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffc400;
   font-size: 16px;
   display: flex;
@@ -2075,7 +2075,7 @@ nav.masternav {
 }
 
 #sec-innovation .shelf-arrow:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 #sec-innovation .shelf-arrow.arrow-left {
