@@ -298,59 +298,59 @@ function initSpotlightConfetti() {
 // REA STORY: STAGE PANEL SWITCHER
 // ═══════════════════════════════════════════════════════════════════════════
 
-function initReaStoryStage() {
-  const track = document.getElementById("stageTrack-reastory");
-  if (!track) return;
+// function initReaStoryStage() {
+//   const track = document.getElementById("stageTrack-reastory");
+//   if (!track) return;
 
-  const axPips = [
-    document.getElementById("axPip0-reastory"),
-    document.getElementById("axPip1-reastory"),
-  ];
-  const axPipsTop = [
-    document.getElementById("axPip0Top-reastory"),
-    document.getElementById("axPip1Top-reastory"),
-  ];
-  const axLabels = [
-    document.getElementById("axLabel0-reastory"),
-    document.getElementById("axLabel1-reastory"),
-  ];
-  const dots = [
-    document.getElementById("dot0-reastory"),
-    document.getElementById("dot1-reastory"),
-  ];
-  const leftArrow = document.getElementById("stageLeft-reastory");
-  const rightArrow = document.getElementById("stageRight-reastory");
+//   const axPips = [
+//     document.getElementById("axPip0-reastory"),
+//     document.getElementById("axPip1-reastory"),
+//   ];
+//   const axPipsTop = [
+//     document.getElementById("axPip0Top-reastory"),
+//     document.getElementById("axPip1Top-reastory"),
+//   ];
+//   const axLabels = [
+//     document.getElementById("axLabel0-reastory"),
+//     document.getElementById("axLabel1-reastory"),
+//   ];
+//   const dots = [
+//     document.getElementById("dot0-reastory"),
+//     document.getElementById("dot1-reastory"),
+//   ];
+//   const leftArrow = document.getElementById("stageLeft-reastory");
+//   const rightArrow = document.getElementById("stageRight-reastory");
 
-  let idx = 0;
+//   let idx = 0;
 
-  function render() {
-    const track = document.querySelector("#sec-reastory .stage-track");
-    const maxShift = track.scrollWidth - track.parentElement.clientWidth;
+//   function render() {
+//     const track = document.querySelector("#sec-reastory .stage-track");
+//     const maxShift = track.scrollWidth - track.parentElement.clientWidth;
 
-    const progress = idx === 0 ? 0 : 1;
-    track.style.transform = `translateX(${-progress * maxShift}px)`;
-    axPips.forEach((p, i) => p && p.classList.toggle("lit", i === idx));
-    axPipsTop.forEach((p, i) => p && p.classList.toggle("lit", i === idx));
-    axLabels.forEach((l, i) => l && l.classList.toggle("active", i === idx));
-    dots.forEach((d, i) => d && d.classList.toggle("active", i === idx));
-    if (leftArrow) leftArrow.disabled = idx === 0;
-    if (rightArrow) rightArrow.disabled = idx === 1;
-  }
+//     const progress = idx === 0 ? 0 : 1;
+//     track.style.transform = `translateX(${-progress * maxShift}px)`;
+//     axPips.forEach((p, i) => p && p.classList.toggle("lit", i === idx));
+//     axPipsTop.forEach((p, i) => p && p.classList.toggle("lit", i === idx));
+//     axLabels.forEach((l, i) => l && l.classList.toggle("active", i === idx));
+//     dots.forEach((d, i) => d && d.classList.toggle("active", i === idx));
+//     if (leftArrow) leftArrow.disabled = idx === 0;
+//     if (rightArrow) rightArrow.disabled = idx === 1;
+//   }
 
-  function switchPanel(i) {
-    idx = i;
-    render();
-  }
-  window.switchPanel = switchPanel;
+//   function switchPanel(i) {
+//     idx = i;
+//     render();
+//   }
+//   window.switchPanel = switchPanel;
 
-  if (leftArrow) leftArrow.addEventListener("click", () => switchPanel(0));
-  if (rightArrow) rightArrow.addEventListener("click", () => switchPanel(1));
-  dots.forEach(
-    (d, i) => d && d.addEventListener("click", () => switchPanel(i)),
-  );
+//   if (leftArrow) leftArrow.addEventListener("click", () => switchPanel(0));
+//   if (rightArrow) rightArrow.addEventListener("click", () => switchPanel(1));
+//   dots.forEach(
+//     (d, i) => d && d.addEventListener("click", () => switchPanel(i)),
+//   );
 
-  render();
-}
+//   render();
+// }
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LANDING: PARALLAX SHARDS + VIDEO SLIDER
@@ -674,7 +674,7 @@ export function initUIInteractions() {
   initScrollReveal();
   initNavHighlight();
   initSpotlightConfetti();
-  initReaStoryStage();
+  // initReaStoryStage();
   initLandingParallax();
   initLandingVideoSlider();
   initInnovationVideoZoom();

@@ -1331,13 +1331,15 @@ nav.masternav {
 #sec-reastory .stage-track {
   display: flex;
   height: auto;
-  width: auto;
+  flex-direction: column;
+  width: 100%;
   will-change: transform;
-  transition: transform 0.05s linear;
+  /* transition: transform 0.05s linear; */
+  transform: none !important;
 }
 
 #sec-reastory .stage-panel {
-  flex: 0 0 88%;
+  flex: none;
   height: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1350,6 +1352,33 @@ nav.masternav {
   background: #fff;
 }
 
+#sec-reastory .stage-progress,
+#sec-reastory .slim-axis,
+#sec-reastory #stageLeft-reastory,
+#sec-reastory #stageRight-reastory {
+  display: none;
+}
+
+
+#sec-reastory .panel-section-label {
+  grid-column: 1 / -1;        /* spans both columns */
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--med-reastory);
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(57, 48, 45, 0.08);
+  margin-bottom: 8px;
+}
+
+#sec-reastory .panel-rea .panel-section-label {
+  color: var(--cocoa-reastory);    /* darker for the light REA panel */
+}
+
+#sec-reastory .panel-bpm .panel-section-label {
+  color: var(--med-reastory);      /* teal for the BPM panel */
+}
 /* Add inside your existing #sec-reastory styles */
 
 /* Make BPM photo container identical to REA photo container */
@@ -1714,9 +1743,9 @@ nav.masternav {
   }
 }
 
-#sec-reastory .stage-track {
+/* #sec-reastory .stage-track {
   transition: transform 0.5s ease;
-}
+} */
 
 #sec-reastory .stage-arrow {
   position: absolute;
