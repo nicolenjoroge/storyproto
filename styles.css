@@ -1340,7 +1340,7 @@ nav.masternav {
 
 #sec-reastory .stage-panel {
   flex: none;
-  height: auto;
+  height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
