@@ -3,7 +3,6 @@
 // Config: add your campaign poster images and copy here.
 import { CONTENT_BASE } from './helpers.js';
 
-
 const CAMPAIGNS = {
 
   // Fires when user has scrolled through 3+ sections
@@ -18,7 +17,7 @@ const CAMPAIGNS = {
   teasers: [
     {
       triggerSection: 'sec-reastory',
-      image:   `${CONTENT_BASE}/media/Images/campaign-rea-story.png`,
+      image:   `${CONTENT_BASE}/media/Images/campaign-exit.png`,
       label:   'Did you know?',
       text:    'Every REA initiative started with one question — why are we still doing this by hand?',
       ctaHref: '#sec-reastory',
@@ -59,7 +58,7 @@ const CAMPAIGNS = {
       caption: 'Document Approval — 68% faster TAT, 3,200 hours saved. One of REA\'s highest impact initiatives.',
     },
     'initiative-002': {
-      image:   `${CONTENT_BASE}/media/Images/campaign-eva.png`,
+      image:   `${CONTENT_BASE}/media/Images/campaign-spotlight.png`,
       caption: 'EVA — the AI assistant powering REA. Ask it anything about your workflows.',
     },
   },
@@ -75,6 +74,33 @@ function markFired(key) {
   fired.add(key);
   sessionStorage.setItem('cp-fired', JSON.stringify([...fired]));
 }
+
+// ── AD MODAL (shared by teaser / toast / exit banner clicks) ─────────────────
+function openAdModal(cfg) {
+  if (!cfg) return;
+  // Map whatever shape the config object has into the modal fields
+  document.getElementById('cp-ad-img').src          = cfg.image  || '';
+  document.getElementById('cp-ad-label').textContent = cfg.label  || cfg.title || '';
+  document.getElementById('cp-ad-title').textContent = cfg.title  || cfg.headline || cfg.label || '';
+  document.getElementById('cp-ad-body').textContent  = cfg.body   || cfg.text  || cfg.sub || cfg.caption || '';
+  const cta = document.getElementById('cp-ad-cta');
+  cta.href        = cfg.ctaHref  || '#';
+  cta.textContent = cfg.ctaLabel || cfg.ctaLabel || 'Explore →';
+
+  const bd = document.getElementById('cp-ad-backdrop');
+  const md = document.getElementById('cp-ad-modal');
+  bd.style.opacity      = '1'; bd.style.pointerEvents = 'auto';
+  md.style.opacity      = '1'; md.style.pointerEvents = 'auto';
+  md.style.transform    = 'translate(-50%,-50%) scale(1)';
+}
+
+window.closeAdModal = function () {
+  const bd = document.getElementById('cp-ad-backdrop');
+  const md = document.getElementById('cp-ad-modal');
+  bd.style.opacity      = '0'; bd.style.pointerEvents = 'none';
+  md.style.opacity      = '0'; md.style.pointerEvents = 'none';
+  md.style.transform    = 'translate(-50%,-48%) scale(0.94)';
+};
 
 // ── LIGHTBOX ─────────────────────────────────────────────────────────────────
 export function openCampaignPoster(key) {
@@ -107,9 +133,14 @@ function showTeaser(cfg) {
   cta.href        = cfg.ctaHref;
   cta.textContent = cfg.ctaLabel;
   document.getElementById('cp-teaser').style.right = '24px';
+  // Register click handler — opens full ad modal; dismiss/CTA buttons stop propagation
+  window._cpTeaserClick = (e) => {
+    if (e.target.closest('button, a')) return; // let dismiss & CTA work normally
+    openAdModal(cfg);
+  };
   markFired('teaser-' + cfg.triggerSection);
-  // Auto-dismiss after 8 seconds
-  teaserTimeout = setTimeout(dismissTeaser, 5000);
+  // Auto-dismiss after 10 seconds
+  teaserTimeout = setTimeout(dismissTeaser, 10000);
 }
 
 window.dismissTeaser = function () {
@@ -128,8 +159,13 @@ function showToast() {
   el.style.opacity = '1';
   el.style.transform = 'translateY(0)';
   el.style.pointerEvents = 'auto';
+  // Register click handler — opens full ad modal; dismiss button stops propagation
+  window._cpToastClick = (e) => {
+    if (e.target.closest('button')) return;
+    openAdModal(cfg);
+  };
   markFired('milestone');
-  setTimeout(dismissToast, 6000);
+  setTimeout(dismissToast, 10000);
 }
 
 window.dismissToast = function () {
@@ -150,6 +186,11 @@ function showExitBanner() {
   btn.textContent = cfg.ctaLabel;
   btn.onclick = () => { cfg.ctaAction?.(); dismissExitBanner(); };
   document.getElementById('cp-exit-banner').style.bottom = '0';
+  // Register click handler — clicking image or text area opens the ad modal
+  window._cpExitClick = (e) => {
+    if (e.target.closest('button')) return;
+    openAdModal(cfg);
+  };
   markFired('exit');
 }
 
@@ -188,7 +229,7 @@ function initExitIntent() {
   if (fired.has('exit')) return;
   // Only trigger after user has been on page for 30 seconds
   let ready = false;
-  setTimeout(() => { ready = true; }, 30000);
+  setTimeout(() => { ready = true; }, 15000);
 
   document.addEventListener('mouseleave', e => {
     if (ready && e.clientY <= 0) showExitBanner();
