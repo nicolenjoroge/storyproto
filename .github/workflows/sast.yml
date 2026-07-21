@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  security-events: write    # allows uploading SARIF to Security tab
+  contents: read            # allows reading repo contents
+  actions: read
+
+
 jobs:
 
   gitleaks:
@@ -24,6 +30,9 @@ jobs:
   semgrep:
     name: Semgrep SAST
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write    # ← add this
+      contents: read
     container:
       image: semgrep/semgrep
     steps:
