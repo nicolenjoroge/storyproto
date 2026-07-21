@@ -36,7 +36,7 @@ function renderTopInitiatives(section) {
          data-stats="${escAttr(JSON.stringify(item.stats || []))}"
          onclick="openCardFromEl(this)"`;
     return `
-      <div class="shelf-card" ${clickHandler}>
+      <div class="shelf-card" ${clickHandler} data-campaign-poster="initiative-001>
         <div class="shelf-rank">${item.rank}</div>
         <div class="shelf-art">
           <img src="${mediaUrl(item.image)}" alt="${escAttr(item.title)}" />

@@ -596,6 +596,151 @@
       </div>
     </div>
   </div>
+
+  <!-- ── CAMPAIGN POPUP SYSTEM ── -->
+
+<!-- Overlay backdrop (shared by contextual click overlays) -->
+<div id="cp-backdrop" onclick="closeCampaignOverlay()" style="
+  position: fixed; inset: 0; z-index: 8000;
+  background: rgba(10,8,7,0.82);
+  backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+"></div>
+
+<!-- Contextual lightbox -->
+<div id="cp-lightbox" style="
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -48%) scale(0.94);
+  z-index: 8001; width: min(560px, 90vw);
+  background: #161311;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px; overflow: hidden;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+">
+  <button onclick="closeCampaignOverlay()" style="
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(10,8,7,0.75);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff; font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  ">✕</button>
+  <img id="cp-lightbox-img" src="" alt="" style="
+    width: 100%; display: block; max-height: 70vh; object-fit: contain;
+    background: #0f0c0b;
+  "/>
+  <div id="cp-lightbox-caption" style="
+    padding: 16px 22px; font-size: 13px;
+    color: rgba(255,255,255,0.55); line-height: 1.6;
+  "></div>
+</div>
+
+<!-- Scroll-triggered section teaser (slides in from right) -->
+<div id="cp-teaser" style="
+  position: fixed; bottom: 100px; right: -340px;
+  z-index: 7000; width: 300px;
+  background: #1a1614;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px; padding: 18px 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  transition: right 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  display: flex; flex-direction: column; gap: 10px;
+">
+  <button onclick="dismissTeaser()" style="
+    position: absolute; top: 10px; right: 12px;
+    background: none; border: none;
+    color: rgba(255,255,255,0.35); font-size: 16px; cursor: pointer;
+  ">×</button>
+  <img id="cp-teaser-img" src="" alt="" style="
+    width: 100%; height: 140px; object-fit: cover;
+    border-radius: 10px; display: block;
+  "/>
+  <div id="cp-teaser-label" style="
+    font-size: 9px; font-weight: bold;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--sun-landing);
+  "></div>
+  <div id="cp-teaser-text" style="
+    font-size: 13px; font-weight: bold;
+    color: #fff; line-height: 1.4;
+  "></div>
+  <a id="cp-teaser-cta" href="#" style="
+    font-size: 11px; font-weight: bold;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--sky, #3ab3e5); text-decoration: none;
+  ">Learn more →</a>
+</div>
+
+<!-- Exit-intent banner (slides up from bottom) -->
+<div id="cp-exit-banner" style="
+  position: fixed; bottom: -120px; left: 0; right: 0;
+  z-index: 7000;
+  background: linear-gradient(135deg, #1a1614, #2a1520);
+  border-top: 1px solid rgba(159,25,126,0.3);
+  padding: 18px 40px;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 24px;
+  transition: bottom 0.4s ease;
+">
+  <img id="cp-exit-img" src="" alt="" style="
+    height: 64px; width: 64px;
+    object-fit: cover; border-radius: 10px; flex-shrink: 0;
+  "/>
+  <div style="flex: 1;">
+    <div id="cp-exit-headline" style="
+      font-size: 15px; font-weight: bold; color: #fff; margin-bottom: 4px;
+    "></div>
+    <div id="cp-exit-sub" style="
+      font-size: 12px; color: rgba(255,255,255,0.5);
+    "></div>
+  </div>
+  <button onclick="dismissExitBanner()" style="
+    padding: 10px 22px; border-radius: 30px;
+    background: #f8e200; color: #1a1614;
+    font-size: 12px; font-weight: bold;
+    border: none; cursor: pointer; white-space: nowrap;
+    flex-shrink: 0;
+  " id="cp-exit-cta">See more</button>
+  <button onclick="dismissExitBanner()" style="
+    background: none; border: none;
+    color: rgba(255,255,255,0.35); font-size: 20px;
+    cursor: pointer; flex-shrink: 0;
+  ">×</button>
+</div>
+
+<!-- Milestone toast (bottom right) -->
+<div id="cp-toast" style="
+  position: fixed; bottom: 28px; right: 28px;
+  z-index: 7000; width: 280px;
+  background: #1a1614;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 14px 16px;
+  display: flex; gap: 12px; align-items: flex-start;
+  opacity: 0; transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+">
+  <img id="cp-toast-img" src="" alt="" style="
+    width: 44px; height: 44px; border-radius: 8px;
+    object-fit: cover; flex-shrink: 0;
+  "/>
+  <div>
+    <div id="cp-toast-title" style="
+      font-size: 12px; font-weight: bold; color: #fff; margin-bottom: 3px;
+    "></div>
+    <div id="cp-toast-body" style="
+      font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5;
+    "></div>
+  </div>
+  <button onclick="dismissToast()" style="
+    background: none; border: none;
+    color: rgba(255,255,255,0.3); font-size: 14px;
+    cursor: pointer; flex-shrink: 0; padding: 0;
+  ">×</button>
+</div>
+
   <script src="/js/env.js"></script>
   <script type="module" src="/js/main.js"></script>
   
