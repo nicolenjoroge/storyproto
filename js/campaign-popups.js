@@ -1,12 +1,14 @@
 // ── CAMPAIGN POPUP SYSTEM ─────────────────────────────────────────────────────
 // All popups are session-aware — each fires at most once per session.
 // Config: add your campaign poster images and copy here.
+import { CONTENT_BASE } from './helpers.js';
+
 
 const CAMPAIGNS = {
 
   // Fires when user has scrolled through 3+ sections
   milestone: {
-    image:   'media/Images/campaign-milestone.png',
+    image:   `${CONTENT_BASE}/media/Images/campaign-milestone.png`,
     title:   'Youve explored REA Buzz',
     body:    '120,000+ hours saved. See what your colleagues are saying.',
     section: 'sec-spotlight',    // fires after this section enters view
@@ -16,7 +18,7 @@ const CAMPAIGNS = {
   teasers: [
     {
       triggerSection: 'sec-reastory',
-      image:   'media/Images/campaign-rea-story.png',
+      image:   `${CONTENT_BASE}/media/Images/campaign-rea-story.png`,
       label:   'Did you know?',
       text:    'Every REA initiative started with one question — why are we still doing this by hand?',
       ctaHref: '#sec-reastory',
@@ -24,7 +26,7 @@ const CAMPAIGNS = {
     },
     {
       triggerSection: 'sec-innovation',
-      image:   'media/Images/campaign-innovation.png',
+      image:   `${CONTENT_BASE}/media/Images/campaign-innovation.png`,
       label:   'Innovation Portfolio',
       text:    '42 initiatives deployed. See which one affected your department.',
       ctaHref: '#sec-innovation',
@@ -32,7 +34,7 @@ const CAMPAIGNS = {
     },
     {
       triggerSection: 'sec-spotlight',
-      image:   'media/Images/campaign-spotlight.png',
+      image:   `${CONTENT_BASE}/media/Images/campaign-spotlight.png`,
       label:   'Spotlight',
       text:    'Real people. Real impact. Meet the team behind the automations.',
       ctaHref: '#sec-spotlight',
@@ -42,7 +44,7 @@ const CAMPAIGNS = {
 
   // Fires on exit intent
   exitBanner: {
-    image:     'media/Images/campaign-exit.png',
+    image:     `${CONTENT_BASE}/media/Images/campaign-exit.png`,
     headline:  'Before you go — REA has saved KES 380M and counting.',
     sub:       'Share the REA Buzz page with a colleague.',
     ctaLabel:  'Share it →',
@@ -53,11 +55,11 @@ const CAMPAIGNS = {
   // Usage: <div data-campaign-poster="initiative-001">...</div>
   posters: {
     'initiative-001': {
-      image:   'media/Images/campaign-doc-approval.png',
+      image:   `${CONTENT_BASE}/media/Images/campaign-innovation.png`,
       caption: 'Document Approval — 68% faster TAT, 3,200 hours saved. One of REA\'s highest impact initiatives.',
     },
     'initiative-002': {
-      image:   'media/Images/campaign-eva.png',
+      image:   `${CONTENT_BASE}/media/Images/campaign-eva.png`,
       caption: 'EVA — the AI assistant powering REA. Ask it anything about your workflows.',
     },
   },
