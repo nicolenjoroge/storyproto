@@ -4,6 +4,9 @@ import { initUIInteractions } from './ui-interactions.js';
 import { initCampaignLoader } from './loader.js';
 import { initCampaignPopups } from './campaign-popups.js';
 // ── INIT ──────────────────────────────────────────────────────────────────────
+
+el.innerHTML = DOMPurify.sanitize(html);
+
 document.addEventListener('DOMContentLoaded', () => {
   initCampaignLoader();
   loadContent();          // fetches content.json

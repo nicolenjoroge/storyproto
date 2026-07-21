@@ -1,0 +1,7 @@
+# Ignore minified files and vendor code
+*.min.js
+node_modules/
+dist/
+
+# Ignore the loader animations — they use canvas intentionally
+js/campaign-loader.js
