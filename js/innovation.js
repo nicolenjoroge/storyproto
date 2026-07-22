@@ -172,7 +172,7 @@ function renderInnovationVideos(section) {
     </div>`).join(''));
 
   if (dotsEl) {
-    dotsEl.innerHTML = safeHtml(ection.items.map(() => `<div class="sdot"></div>`).join(''));
+    dotsEl.innerHTML = safeHtml(section.items.map(() => `<div class="sdot"></div>`).join(''));
     bindScrollDots(el, dotsEl, CARD_WIDTH);
   }
   bindShelfArrows(

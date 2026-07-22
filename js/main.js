@@ -20,7 +20,7 @@ const isSpotlight = document.body.id === 'page-spotlight'
 
 if (isSpotlight) {
   loadInitiative().then(item => {
-    renderSpotlight(item);
+    renderSpotlightStory(item);
     startSpotlightScrollEngine();
   });
 }
