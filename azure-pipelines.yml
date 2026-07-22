@@ -1,0 +1,140 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+variables:
+  - group: AZURE_STATIC_WEB_APPS_API_TOKEN  # Variable group in Azure DevOps Library containing AZURE_STATIC_WEB_APPS_API_TOKEN
+  - name: NODE_VERSION
+    value: '18.x'
+
+stages:
+  # -------------------------------------------------------
+  # Stage 1: Security Checks (runs on every push / PR)
+  # -------------------------------------------------------
+  - stage: SecurityChecks
+    displayName: 'Security Checks'
+    jobs:
+      - job: SecurityScan
+        displayName: 'Dependency & Secret Scan'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            submodules: true
+            lfs: false
+            persistCredentials: false   # don't leak pipeline credentials to submodules
+
+          - task: NodeTool@0
+            displayName: 'Use Node.js $(NODE_VERSION)'
+            inputs:
+              versionSpec: $(NODE_VERSION)
+
+          # Audit npm dependencies for known vulnerabilities
+          - script: |
+              npm audit --audit-level=high
+            displayName: 'npm audit (fail on high/critical)'
+            continueOnError: false
+
+          # Scan for secrets accidentally committed to the repo
+          - task: Gitleaks@2
+            displayName: 'Gitleaks secret scan'
+            inputs:
+              scanlocation: '$(Build.SourcesDirectory)'
+              configtype: 'default'
+              # Uncomment to use a custom .gitleaks.toml in your repo:
+              # configtype: 'custom'
+              # configfile: '$(Build.SourcesDirectory)/.gitleaks.toml'
+              reportformat: 'sarif'
+            continueOnError: false
+
+          # Publish Gitleaks SARIF results to the pipeline
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Gitleaks report'
+            condition: always()
+            inputs:
+              PathtoPublish: '$(Agent.TempDirectory)/gitleaks-report.sarif'
+              ArtifactName: 'gitleaks-sarif'
+
+  # -------------------------------------------------------
+  # Stage 2: Build & Deploy  (push to main OR open/sync PR)
+  # -------------------------------------------------------
+  - stage: BuildAndDeploy
+    displayName: 'Build and Deploy'
+    dependsOn: SecurityChecks
+    condition: |
+      and(
+        succeeded('SecurityChecks'),
+        or(
+          eq(variables['Build.Reason'], 'IndividualCI'),
+          eq(variables['Build.Reason'], 'BatchedCI'),
+          eq(variables['Build.Reason'], 'PullRequest')
+        )
+      )
+    jobs:
+      - job: BuildAndDeployJob
+        displayName: 'Build and Deploy Job'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            submodules: true
+            lfs: false
+            persistCredentials: false
+
+          - task: NodeTool@0
+            displayName: 'Use Node.js $(NODE_VERSION)'
+            inputs:
+              versionSpec: $(NODE_VERSION)
+
+          # Inject runtime environment config (mirrors the GitHub Actions step)
+          - script: |
+              echo "window.CONTENT_BASE_URL = 'https://bpmstoryhub.blob.core.windows.net';" > js/env.js
+            displayName: 'Set production env'
+
+          # Deploy to Azure Static Web Apps
+          # The API token is stored securely in the variable group above and
+          # never echoed to logs (isSecret: true is enforced by the Library).
+          - task: AzureStaticWebApp@0
+            displayName: 'Build and Deploy to Azure Static Web Apps'
+            inputs:
+              app_location: '/'
+              api_location: ''
+              output_location: '.'
+              skip_app_build: true
+              azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
+            env:
+              # Expose the token as an env var so the task can pick it up;
+              # Azure DevOps masks secret variables in all log output.
+              AZURE_STATIC_WEB_APPS_API_TOKEN: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
+
+  # -------------------------------------------------------
+  # Stage 3: Close PR environment  (PR closed/merged only)
+  # -------------------------------------------------------
+  - stage: ClosePullRequest
+    displayName: 'Close Pull Request Environment'
+    dependsOn: []          # run independently — no need to wait for SecurityChecks
+    condition: |
+      and(
+        eq(variables['Build.Reason'], 'PullRequest'),
+        or(
+          eq(variables['System.PullRequest.IsMerged'], 'True'),
+          eq(variables['Build.SourceBranch'], 'refs/heads/main')
+        )
+      )
+    jobs:
+      - job: ClosePRJob
+        displayName: 'Close Pull Request Job'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: AzureStaticWebApp@0
+            displayName: 'Close Pull Request (teardown preview env)'
+            inputs:
+              action: 'close'
+              azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
