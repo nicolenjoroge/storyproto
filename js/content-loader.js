@@ -18,7 +18,7 @@ function fetchData() {
       if (!r.ok) throw new Error(`manifest ${r.status}`);
       return r.json();
     });
-    const version = manifest.liveVersion || manifest.current;
+    const version = manifest.liveVersion;
     const data = await fetch(`${base}/content/published/v${version}.json`).then(r => {
       if (!r.ok) throw new Error(`content ${r.status}`);
       return r.json();

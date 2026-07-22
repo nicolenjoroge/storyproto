@@ -1,5 +1,5 @@
 // ── WHAT'S NEW ────────────────────────────────────────────────────────────────
-import { safeHtml, setText, safeHtml } from './helpers.js';
+import { safeHtml, setText } from './helpers.js';
 
 //Render the What's New section
 export function renderWhatsNew(wn) {

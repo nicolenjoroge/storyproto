@@ -581,7 +581,7 @@ function initSpotlightPeople() {
       peopleName.textContent = p.name;
       peopleContribution.textContent = p.contribution;
       peopleTag.textContent = p.tag;
-      peopleCounter.textContent = `${peopleIdx + 1} / ${peopleData.length}`;
+      // peopleCounter.textContent = `${peopleIdx + 1} / ${peopleData.length}`;
       peopleCard.style.opacity = 1;
     }, 150);
   }
