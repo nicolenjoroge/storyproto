@@ -1,5 +1,5 @@
 // ── WHAT'S NEW ────────────────────────────────────────────────────────────────
-import { setText } from './helpers.js';
+import { safeHtml, setText, safeHtml } from './helpers.js';
 
 //Render the What's New section
 export function renderWhatsNew(wn) {
@@ -18,7 +18,7 @@ function renderBuzzFeed(items) {
 
   const ACCENTS = ['#3ab3e5', '#9f197e', '#00a8a9', '#f8e200', '#e4032c'];
 
-  el.innerHTML = items.map((item, i) => `
+  el.innerHTML = safeHtml(items.map((item, i) => `
     <div class="buzz-card" style="--buzz-accent: ${ACCENTS[i % ACCENTS.length]}">
       <span class="buzz-num">${String(i + 1).padStart(2, '0')}</span>
       <div class="buzz-meta">
@@ -34,5 +34,5 @@ function renderBuzzFeed(items) {
              ${item.benefits.map(b => `<li class="buzz-benefit">${b}</li>`).join('')}
            </ul>`
         : ''}
-    </div>`).join('');
+    </div>`).join(''));
 }

@@ -32,3 +32,26 @@ export function escAttr(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 }
+
+// Add to helpers.js
+export function elById(id)      { return document.getElementById(id); }
+export function setById(id, t)  { const e = elById(id); if (e) e.textContent = t; }
+export function unskel(id)      { const e = elById(id); if (e) e.classList.remove('skel'); }
+
+// Prevent XSS
+
+export function safeHtml(html) {
+  if (typeof DOMPurify === 'undefined') return html;
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: [
+      'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'a', 'img', 'video', 'source', 'ul', 'li', 'strong', 'em', 'br'
+    ],
+    ALLOWED_ATTR: [
+      'class', 'id', 'href', 'src', 'alt', 'poster', 'type',
+      'data-title', 'data-description', 'data-image', 'data-tag',
+      'data-stats', 'data-slide', 'data-c', 'onclick',
+      'style', 'controls', 'playsinline', 'preload', 'autoplay', 'muted', 'loop'
+    ]
+  });
+}

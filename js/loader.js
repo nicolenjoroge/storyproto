@@ -2,6 +2,8 @@
 // Shown once per browser session, alternates randomly between Reduce and
 // Eliminate loaders for campaign purposes.
 
+import { safeHtml } from "./helpers.js";
+
 export function initCampaignLoader() {
   // Already shown this session — remove overlay and exit
   if (sessionStorage.getItem('rea-loader-shown')) {
@@ -37,7 +39,7 @@ function dismissLoader(delay) {
 // ── REDUCE ────────────────────────────────────────────────────────────────────
 function injectReduce(mount) {
   mount.style.background = '#090814';
-  mount.innerHTML = `
+  mount.innerHTML = safeHtml(`
     <style>
       #rl-wrap {
         position: fixed; inset: 0; background: #090814;
@@ -90,7 +92,7 @@ function injectReduce(mount) {
         What if it took half the steps?<br>
         <strong>Reduce it — every idea is rewarded.</strong>
       </p>
-    </div>`;
+    </div>`);
 
   runReduceAnim(dismissLoader);
 }
@@ -181,7 +183,7 @@ function runReduceAnim(onComplete) {
 // ── ELIMINATE ─────────────────────────────────────────────────────────────────
 function injectEliminate(mount) {
   mount.style.background = '#39302D';
-  mount.innerHTML = `
+  mount.innerHTML = safeHtml(`
     <style>
       #el-root {
         font-family: 'Century Gothic', sans-serif; background: #39302D;
@@ -204,7 +206,7 @@ function injectEliminate(mount) {
         What if it didn't need to exist?<br>
         <strong>Eliminate it — every idea is rewarded.</strong>
       </p>
-    </div>`;
+    </div>`);
 
   runEliminateAnim(dismissLoader);
 }

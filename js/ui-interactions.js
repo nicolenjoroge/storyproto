@@ -665,6 +665,68 @@ function initVideoPlayButtons() {
   });
 }
 
+// ── SCROLL ENGINE ─────────────────────────────────────────────────────────────
+const PANEL_TITLES = ['The story', "Who's using it", 'Inside the product', "What's next"];
+
+export function startSpotlightScrollEngine() {
+  const pinHost  = document.getElementById('pin-host');
+  const pinTrack = document.getElementById('pin-track');
+  const count    = pinTrack.children.length;
+  const nav      = document.getElementById('page-nav');
+  const rail     = document.getElementById('scroll-rail');
+  const dots     = Array.from(document.querySelectorAll('.rail-dot'));
+  const railLbl  = document.getElementById('rail-label');
+  const navLbl   = document.getElementById('nav-panel-label');
+
+  let isCoarse = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  let isNarrow = window.innerWidth <= 860;
+
+  function setHeight() {
+    pinHost.style.height = (isNarrow || isCoarse) ? 'auto' : `${count * 100}vh`;
+  }
+
+  function update() {
+    if (isNarrow || isCoarse) return;
+    const rect       = pinHost.getBoundingClientRect();
+    const scrollable = pinHost.offsetHeight - window.innerHeight;
+    const progress   = Math.max(0, Math.min(1, -rect.top / scrollable));
+    pinTrack.style.transform = `translateX(-${progress * (count - 1) * window.innerWidth}px)`;
+
+    const inStory = rect.top < window.innerHeight * 0.1 && rect.bottom > window.innerHeight * 0.1;
+    nav.classList.toggle('is-visible', inStory);
+    rail.classList.toggle('is-visible', inStory);
+
+    const active = Math.min(count - 1, Math.round(progress * (count - 1)));
+    dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
+    railLbl.textContent = progress > 0.97 ? 'End' : 'Scroll →';
+    navLbl.textContent  = `Spotlight · ${PANEL_TITLES[active]}`;
+  }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const scrollable = pinHost.offsetHeight - window.innerHeight;
+      window.scrollTo({
+        top: pinHost.offsetTop + (i / (count - 1)) * scrollable,
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(() => { update(); ticking = false; }); ticking = true; }
+  });
+  window.addEventListener('resize', () => {
+    isCoarse = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    isNarrow = window.innerWidth <= 860;
+    if (isNarrow || isCoarse) pinTrack.style.transform = 'none';
+    setHeight(); update();
+  });
+
+  setHeight();
+  update();
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // ENTRY POINT — call once on DOMContentLoaded
 // ═══════════════════════════════════════════════════════════════════════════
@@ -674,7 +736,6 @@ export function initUIInteractions() {
   initScrollReveal();
   initNavHighlight();
   initSpotlightConfetti();
-  // initReaStoryStage();
   initLandingParallax();
   initLandingVideoSlider();
   initInnovationVideoZoom();

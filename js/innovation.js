@@ -1,5 +1,5 @@
 // ── INNOVATION ────────────────────────────────────────────────────────────────
-import { setText, mediaUrl, escAttr } from './helpers.js';
+import { setText, mediaUrl, escAttr, safeHtml } from './helpers.js';
 import { bindScrollDots, bindShelfArrows } from './ui-interactions.js';
 
 //Render the Innovation section
@@ -26,7 +26,7 @@ function renderTopInitiatives(section) {
 
   const CARD_WIDTH = 358;
 
-  el.innerHTML = section.items.map(item => {
+  el.innerHTML = safeHtml(section.items.map(item => {
     const clickHandler = item.rank === 1 && item.ctaHref
       ? `onclick="location.href='${item.ctaHref}'"`
       : `data-title="${escAttr(item.title)}"
@@ -46,10 +46,10 @@ function renderTopInitiatives(section) {
           <h4>${item.title}</h4>
         </div>
       </div>`;
-  }).join('');
+  }).join(''));
 
   if (dotsEl) {
-    dotsEl.innerHTML = section.items.map(() => `<div class="sdot"></div>`).join('');
+    dotsEl.innerHTML = safeHtml(section.items.map(() => `<div class="sdot"></div>`).join(''));
     bindScrollDots(el, dotsEl, CARD_WIDTH);
   }
   bindShelfArrows(
@@ -72,7 +72,7 @@ function renderDeployed(section) {
 
   const CARD_WIDTH = 236;
 
-  el.innerHTML = section.items.map(item => `
+  el.innerHTML = safeHtml(section.items.map(item => `
     <div class="poster-card"
          style="cursor:pointer"
          data-title="${escAttr(item.title)}"
@@ -85,10 +85,10 @@ function renderDeployed(section) {
         <img src="${mediaUrl(item.image)}" alt="${escAttr(item.title)}" />
       </div>
       <div class="poster-text"><h5>${item.title}</h5></div>
-    </div>`).join('');
+    </div>`).join(''));
 
   if (dotsEl) {
-    dotsEl.innerHTML = section.items.map(() => `<div class="sdot"></div>`).join('');
+    dotsEl.innerHTML = safeHtml(section.items.map(() => `<div class="sdot"></div>`).join(''));
     bindScrollDots(el, dotsEl, CARD_WIDTH);
   }
   bindShelfArrows(
@@ -111,7 +111,7 @@ function renderComingSoon(section) {
 
   const CARD_WIDTH = 236;
 
-  el.innerHTML = section.items.map(item => `
+  el.innerHTML = safeHtml(section.items.map(item => `
     <div class="soon-card"
          style="cursor:pointer"
          data-title="${escAttr(item.title)}"
@@ -127,10 +127,10 @@ function renderComingSoon(section) {
         <h5>${item.title}</h5>
         <p>${item.body}</p>
       </div>
-    </div>`).join('');
+    </div>`).join(''));
 
   if (dotsEl) {
-    dotsEl.innerHTML = section.items.map(() => `<div class="sdot"></div>`).join('');
+    dotsEl.innerHTML = safeHtml(section.items.map(() => `<div class="sdot"></div>`).join(''));
     bindScrollDots(el, dotsEl, CARD_WIDTH);
   }
   bindShelfArrows(
@@ -154,7 +154,7 @@ function renderInnovationVideos(section) {
 
   const CARD_WIDTH = 380;
 
-  el.innerHTML = section.items.map((item, i) => `
+  el.innerHTML = safeHtml(section.items.map((item, i) => `
     <div class="vid-card-lg" id="${item.id}">
       <video
         class="vid-video"
@@ -169,10 +169,10 @@ function renderInnovationVideos(section) {
         <div class="tag">${item.tag}</div>
         <h6>${item.title}</h6>
       </div>
-    </div>`).join('');
+    </div>`).join(''));
 
   if (dotsEl) {
-    dotsEl.innerHTML = section.items.map(() => `<div class="sdot"></div>`).join('');
+    dotsEl.innerHTML = safeHtml(ection.items.map(() => `<div class="sdot"></div>`).join(''));
     bindScrollDots(el, dotsEl, CARD_WIDTH);
   }
   bindShelfArrows(

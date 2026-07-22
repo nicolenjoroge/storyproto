@@ -1,5 +1,5 @@
 // ── SPOTLIGHT ─────────────────────────────────────────────────────────────────
-import { setText } from './helpers.js';
+import { safeHtml, setText } from './helpers.js';
 
 // Render Spotlight section — testimonials, people
 export function renderSpotlight(sp) {
@@ -17,7 +17,7 @@ function renderTestimonials(t) {
 
   const el = document.getElementById('testiTrack-spotlight');
   if (!el || !t.items) return;
-  el.innerHTML = t.items.map(item => `
+  el.innerHTML = safeHtml(t.items.map(item => `
     <div class="testi-card">
       <div class="testi-mark">"</div>
       <div class="testi-quote">${item.quote}</div>
@@ -28,7 +28,7 @@ function renderTestimonials(t) {
           <div class="testi-role">${item.role}</div>
         </div>
       </div>
-    </div>`).join('');
+    </div>`).join(''));
 }
 
 // People — labels updated in place; data passed via global so spotlight JS
