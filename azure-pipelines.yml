@@ -41,25 +41,22 @@ stages:
             displayName: 'npm audit (fail on high/critical)'
             continueOnError: false
 
-          # Scan for secrets accidentally committed to the repo
-          - task: Gitleaks@2
-            displayName: 'Gitleaks secret scan'
+          # Scan for secrets accidentally committed to the repo using built-in credential scanner
+          - task: CredScan@3
+            displayName: 'Credential scan (CredScan)'
             inputs:
-              scanlocation: '$(Build.SourcesDirectory)'
-              configtype: 'default'
-              # Uncomment to use a custom .gitleaks.toml in your repo:
-              # configtype: 'custom'
-              # configfile: '$(Build.SourcesDirectory)/.gitleaks.toml'
-              reportformat: 'sarif'
+              toolMajorVersion: 'V2'
+              scanFolder: '$(Build.SourcesDirectory)'
+              outputFormat: 'sarif'
             continueOnError: false
 
-          # Publish Gitleaks SARIF results to the pipeline
+          # Publish CredScan results to the pipeline
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish Gitleaks report'
+            displayName: 'Publish CredScan report'
             condition: always()
             inputs:
-              PathtoPublish: '$(Agent.TempDirectory)/gitleaks-report.sarif'
-              ArtifactName: 'gitleaks-sarif'
+              PathtoPublish: '$(Agent.TempDirectory)/CredentialScannerOutput'
+              ArtifactName: 'credscan-results'
 
   # -------------------------------------------------------
   # Stage 2: Build & Deploy  (push to main OR open/sync PR)
