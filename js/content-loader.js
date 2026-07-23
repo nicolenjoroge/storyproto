@@ -85,7 +85,7 @@ function renderAll(data, index) {
   renderInnovation(data.innovation);
   renderSpotlight(data.spotlight);
   renderWhatsNew(data.whatsNew);
-  // initCampaignPopups(data.campaigns)
+  initCampaignPopups(data.campaigns)
   // Note: renderSpotlightStory is called from spotlight.html via loadInitiative
   // not here — story data lives on the initiative item, not at the root
 }
