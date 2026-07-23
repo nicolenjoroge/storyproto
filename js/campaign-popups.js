@@ -1,7 +1,7 @@
 // ── CAMPAIGN POPUP SYSTEM ─────────────────────────────────────────────────────
 // All popups are session-aware — each fires at most once per session.
 // Config: add your campaign poster images and copy here.
-import { CONTENT_BASE } from './helpers.js';
+import { CONTENT_BASE, mediaUrl } from './helpers.js';
 
 // const CAMPAIGNS = {
 
@@ -89,7 +89,7 @@ function markFired(key) {
 function openAdModal(cfg) {
   if (!cfg) return;
   // Map whatever shape the config object has into the modal fields
-  document.getElementById('cp-ad-img').src          = cfg.image  || '';
+  document.getElementById('cp-ad-img').src          = mediaUrl(cfg.image)  || '';
   document.getElementById('cp-ad-label').textContent = cfg.label  || cfg.title || '';
   document.getElementById('cp-ad-title').textContent = cfg.title  || cfg.headline || cfg.label || '';
   document.getElementById('cp-ad-body').textContent  = cfg.body   || cfg.text  || cfg.sub || cfg.caption || '';
@@ -116,7 +116,7 @@ window.closeAdModal = function () {
 export function openCampaignPoster(key) {
   const cfg = CAMPAIGNS.posters[key];
   if (!cfg) return;
-  document.getElementById('cp-lightbox-img').src     = cfg.image;
+  document.getElementById('cp-lightbox-img').src     = mediaUrl(cfg.image);
   document.getElementById('cp-lightbox-caption').textContent = cfg.caption || '';
   const bd = document.getElementById('cp-backdrop');
   const lb = document.getElementById('cp-lightbox');
@@ -136,7 +136,7 @@ window.closeCampaignOverlay = function () {
 // ── TEASER ────────────────────────────────────────────────────────────────────
 function showTeaser(cfg) {
   if (fired.has('teaser-' + cfg.triggerSection)) return;
-  document.getElementById('cp-teaser-img').src       = cfg.image;
+  document.getElementById('cp-teaser-img').src       = mediaUrl(cfg.image);
   document.getElementById('cp-teaser-label').textContent = cfg.label;
   document.getElementById('cp-teaser-text').textContent  = cfg.text;
   const cta = document.getElementById('cp-teaser-cta');
@@ -162,7 +162,7 @@ window.dismissTeaser = function () {
 function showToast() {
   if (fired.has('milestone')) return;
   const cfg = CAMPAIGNS.milestone;
-  document.getElementById('cp-toast-img').src         = cfg.image;
+  document.getElementById('cp-toast-img').src         = mediaUrl(cfg.image);
   document.getElementById('cp-toast-title').textContent = cfg.title;
   document.getElementById('cp-toast-body').textContent  = cfg.body;
   const el = document.getElementById('cp-toast');
@@ -189,7 +189,7 @@ window.dismissToast = function () {
 function showExitBanner() {
   if (fired.has('exit') || !exitListening) return;
   const cfg = CAMPAIGNS.exitBanner;
-  document.getElementById('cp-exit-img').src            = cfg.image;
+  document.getElementById('cp-exit-img').src            = mediaUrl(cfg.image);
   document.getElementById('cp-exit-headline').textContent = cfg.headline;
   document.getElementById('cp-exit-sub').textContent      = cfg.sub;
   const btn = document.getElementById('cp-exit-cta');
