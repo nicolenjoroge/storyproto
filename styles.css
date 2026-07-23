@@ -3073,16 +3073,37 @@ nav.masternav {
 }
 
 /* People grid — all cards visible at once */
+#sec-spotlight .people-grid-wrap {
+  overflow-y: auto;
+  max-height: 420px;        /* cap the height so overflow scrolls */
+  padding-right: 6px;       /* space for the scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(228, 3, 44, 0.4) transparent;
+}
+
+#sec-spotlight .people-grid-wrap::-webkit-scrollbar {
+  width: 4px;
+}
+
+#sec-spotlight .people-grid-wrap::-webkit-scrollbar-thumb {
+  background: rgba(228, 3, 44, 0.4);
+  border-radius: 2px;
+}
+
+#sec-spotlight .people-grid-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 #sec-spotlight .people-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
   width: 100%;
   padding: 8px 0;
-  perspective: 1000px;    /* establishes the 3D space for children */
 }
 
 #sec-spotlight .people-card {
+  aspect-ratio: 3 / 4;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
@@ -3091,19 +3112,13 @@ nav.masternav {
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-  aspect-ratio: 4 / 3;        /* fixed proportions regardless of content */
-  transform-style: preserve-3d;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-              border-color 0.2s,
-              box-shadow 0.35s;
+  transition: border-color 0.2s, background 0.2s;
+  overflow: hidden;         /* clips content to the aspect ratio box */
 }
 
 #sec-spotlight .people-card:hover {
-  transform: scale3d(0.93, 0.93, 0.93)   /* shrinks uniformly in 3D */
-             translateZ(-40px);            /* pushes back into the screen */
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
-              inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 #sec-spotlight .people-avatar-lg {
