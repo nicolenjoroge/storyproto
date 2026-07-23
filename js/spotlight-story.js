@@ -1,5 +1,5 @@
 // Add to landing.js
-import { mediaUrl, safeHtml, setById, unskel, elById }          from './helpers.js';
+import { mediaUrl, setById, unskel, elById }          from './helpers.js';
 
 export function renderSpotlightStory(item) {
   const story = item.story   || {};
@@ -12,21 +12,18 @@ export function renderSpotlightStory(item) {
   unskel('intro-sub');
   const previewBody = story.body || '';
   setById('intro-sub', previewBody.length > 160 ? previewBody.slice(0, 157) + '…' : previewBody);
-  elById('intro-chips').innerHTML = safeHtml(
+  elById('intro-chips').innerHTML = 
     [item.stream, item.businessArea].filter(Boolean)
-      .map(c => `<span class="chip">${c}</span>`).join('')
-  );
+      .map(c => `<span class="chip">${c}</span>`).join('');
 
   // Panel 1 — Story
   unskel('story-heading'); setById('story-heading', story.heading || item.title || '');
   unskel('story-body');    setById('story-body',    story.body    || '');
-  elById('story-chips').innerHTML = safeHtml(
-    (story.techChips || []).map(c => `<span class="story-chip">${c}</span>`).join('')
-  );
-  elById('orb-labels').innerHTML = safeHtml(
+  elById('story-chips').innerHTML = 
+    (story.techChips || []).map(c => `<span class="story-chip">${c}</span>`).join('');
+  elById('orb-labels').innerHTML = 
     (story.techChips || [item.stream, item.businessArea].filter(Boolean))
-      .slice(0, 5).map(c => `<div class="orb-label">${c}</div>`).join('')
-  );
+      .slice(0, 5).map(c => `<div class="orb-label">${c}</div>`).join('');
   spawnParticles();
   requestAnimationFrame(() => {
     const col = elById('story-text-col');
@@ -34,14 +31,13 @@ export function renderSpotlightStory(item) {
   });
 
   // Panel 2 — Usage
-  elById('usage-grid').innerHTML = safeHtml(
+  elById('usage-grid').innerHTML = 
     usageBlock('Top users',          usage.topUsers         || [], 'user') +
     usageBlock('Top departments',    usage.topDepartments   || [], 'dept') +
-    usageBlock('Top document types', usage.topDocumentTypes || [], 'doc')
-  );
+    usageBlock('Top document types', usage.topDocumentTypes || [], 'doc');
 
   // Panel 3 — Media
-  elById('media-shelf').innerHTML = safeHtml(
+  elById('media-shelf').innerHTML = 
     media.length
       ? media.slice(0, 4).map(m => mediaCard(m)).join('')
       : `<div class="media-card">
@@ -55,8 +51,7 @@ export function renderSpotlightStory(item) {
              </div>
            </div>
            <div class="media-card-caption">Screenshots and recordings will appear here.</div>
-         </div>`
-  );
+         </div>`;
 
   // Panel 4 — Close
   setById('close-title', story.closing?.line || `${item.title} is live across NCBA.`);

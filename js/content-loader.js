@@ -4,6 +4,7 @@ import { renderReaStory }       from './rea-story.js';
 import { renderInnovation }     from './innovation.js';
 import { renderSpotlight }      from './spotlight.js';
 import { renderWhatsNew }       from './whats-new.js';
+import { initCampaignPopups } from './campaign-popups.js';
 
 // ── CACHE ─────────────────────────────────────────────────────────────────────
 // Fetched once and reused by both loadContent and loadInitiative.
@@ -84,6 +85,7 @@ function renderAll(data, index) {
   renderInnovation(data.innovation);
   renderSpotlight(data.spotlight);
   renderWhatsNew(data.whatsNew);
+  // initCampaignPopups(data.campaigns)
   // Note: renderSpotlightStory is called from spotlight.html via loadInitiative
   // not here — story data lives on the initiative item, not at the root
 }

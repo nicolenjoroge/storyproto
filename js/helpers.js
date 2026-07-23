@@ -40,18 +40,4 @@ export function unskel(id)      { const e = elById(id); if (e) e.classList.remov
 
 // Prevent XSS
 
-export function safeHtml(html) {
-  if (typeof DOMPurify === 'undefined') return html;
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [
-      'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-      'a', 'img', 'video', 'source', 'ul', 'li', 'strong', 'em', 'br'
-    ],
-    ALLOWED_ATTR: [
-      'class', 'id', 'href', 'src', 'alt', 'poster', 'type',
-      'data-title', 'data-description', 'data-image', 'data-tag',
-      'data-stats', 'data-slide', 'data-c', 'onclick',
-      'style', 'controls', 'playsinline', 'preload', 'autoplay', 'muted', 'loop'
-    ]
-  });
-}
+

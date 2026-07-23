@@ -10,7 +10,7 @@ import { renderSpotlightStory }  from './spotlight-story.js';
 document.addEventListener('DOMContentLoaded', () => {
   initCampaignLoader();
   loadContent();          // fetches content.json
-  initCampaignPopups();
+  initCampaignPopups();   //will be removed
   initUIInteractions();   // animations, scroll effects, carousels, modal — all UX/UI
 });
 

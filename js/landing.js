@@ -1,5 +1,5 @@
 // ── LANDING PAGE───────────────────────────────────────────────────────────────────
-import { setText, setAttr, mediaUrl, safeHtml } from './helpers.js';
+import { setText, setAttr, mediaUrl } from './helpers.js';
 
 //Render the landing page sections, resolved from index via refIds
 export function renderLanding(landing, index) {
@@ -74,7 +74,7 @@ function renderStoryhub(config, index) {
   const el = document.getElementById('list-storyhub');
   if (!el) return;
   const items = config.refIds.map(id => index[id]).filter(Boolean);
-  el.innerHTML = safeHtml(items.map(teaser => `
+  el.innerHTML = items.map(teaser => `
     <a href="${teaser.href}">
       <div class="headline-item">
         <span class="dot"></span>
@@ -83,5 +83,5 @@ function renderStoryhub(config, index) {
           <h5>${teaser.headline}</h5>
         </div>
       </div>
-    </a>`).join(''));
+    </a>`).join('');
 }

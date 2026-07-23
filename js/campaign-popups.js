@@ -64,6 +64,9 @@ const CAMPAIGNS = {
   },
 };
 
+
+
+
 // ── STATE ─────────────────────────────────────────────────────────────────────
 const fired  = new Set(JSON.parse(sessionStorage.getItem('cp-fired') || '[]'));
 let teaserIdx      = 0;
@@ -274,3 +277,20 @@ export function initCampaignPopups() {
   initContextualPosters();
   onlyOneAtATime();
 }
+
+// Replace the hardcoded CAMPAIGNS const with a variable
+// let CAMPAIGNS = {};
+
+// // Add an init function that accepts the data from page.json
+// export function setCampaignData(data) {
+//   CAMPAIGNS = data;
+// }
+
+// // Update initCampaignPopups to accept data
+// export function initCampaignPopups(campaignData) {
+//   if (campaignData) setCampaignData(campaignData);
+//   initObservers();
+//   initExitIntent();
+//   initContextualPosters();
+//   onlyOneAtATime();
+// }
