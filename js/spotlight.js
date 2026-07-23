@@ -32,11 +32,21 @@ function renderTestimonials(t) {
 }
 
 // People — labels updated in place; data passed via global so spotlight JS
-function renderPeople(pe) {
+export function renderPeople(pe) {
   if (!pe) return;
   setText('[data-c="sp-people-label"]', pe.actLabel);
   setText('[data-c="sp-people-title"]', pe.actTitle);
   setText('[data-c="sp-people-desc"]',  pe.actDesc);
-  if (pe.items) window.__spotlightPeopleData = pe.items;
+
+  const el = document.getElementById('peopleGrid-spotlight');
+  if (!el || !pe.items) return;
+
+  el.innerHTML = DOMPurify.sanitize(pe.items.map(person => `
+    <div class="people-card">
+      <div class="people-avatar-lg"></div>
+      <div class="people-name-lg">${person.name}</div>
+      <div class="people-contribution-lg">${person.contribution}</div>
+      <div class="people-tag-lg">${person.tag}</div>
+    </div>`).join(''));
 }
 
