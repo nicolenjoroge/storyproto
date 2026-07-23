@@ -3073,10 +3073,18 @@ nav.masternav {
 }
 
 /* People grid — all cards visible at once */
+#sec-spotlight .sl-act[data-act="1"] .sl-split-right {
+  align-items: stretch;       /* stretch instead of center */
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* people-grid-wrap fills the right column height and scrolls */
 #sec-spotlight .people-grid-wrap {
+  width: 100%;
+  height: 100%;               /* fill the stretched sl-split-right */
   overflow-y: auto;
-  max-height: 420px;        /* cap the height so overflow scrolls */
-  padding-right: 6px;       /* space for the scrollbar */
+  padding-right: 6px;
   scrollbar-width: thin;
   scrollbar-color: rgba(228, 3, 44, 0.4) transparent;
 }
