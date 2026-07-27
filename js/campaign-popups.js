@@ -166,9 +166,9 @@ function showToast() {
   document.getElementById('cp-toast-title').textContent = cfg.title;
   document.getElementById('cp-toast-body').textContent  = cfg.body;
   const el = document.getElementById('cp-toast');
-  el.style.opacity = '1';
+  el.classList.add('open');      // for lightbox, backdrop, ad-modal
   el.style.transform = 'translateY(0)';
-  el.style.pointerEvents = 'auto';
+el.classList.add('visible');   // for teaser, toast, exit-banner
   // Register click handler — opens full ad modal; dismiss button stops propagation
   window._cpToastClick = (e) => {
     if (e.target.closest('button')) return;

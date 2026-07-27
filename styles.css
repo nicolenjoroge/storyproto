@@ -4291,3 +4291,518 @@ nav.masternav {
     width: 100%;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EXTRACTED FROM index.html — add to styles.css
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── CAMPAIGN LOADER ─────────────────────────────────────────────────────── */
+.campaign-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #090814;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.loader-mount {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── NAV LOGO ────────────────────────────────────────────────────────────── */
+.masternav-logo img {
+  height: 32px;
+}
+
+.masternav-logo p {
+  padding-left: 16px;
+}
+
+.masternav-logo p span {
+  color: #3ab3e5;
+}
+
+/* ── SPOTLIGHT ACT LABELS ────────────────────────────────────────────────── */
+#sec-spotlight .sl-act[data-act="0"] .sl-act-label {
+  color: var(--med-spotlight);
+}
+
+#sec-spotlight .sl-act[data-act="1"] .sl-act-label {
+  color: var(--coral-spotlight);
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────────────────── */
+.site-footer {
+  background: linear-gradient(135deg, #1a1614, #2a1520);
+  border-top: 1px solid rgba(159, 25, 126, 0.3);
+  padding: 64px 40px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  height: 300px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.footer-copy {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-headline {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.footer-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+}
+
+.footer-cta {
+  padding: 12px 28px;
+  border-radius: 30px;
+  background: #f8e200;
+  color: #1a1614;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.footer-cta:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.footer-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-legal {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── CAMPAIGN POPUP SYSTEM ───────────────────────────────────────────────── */
+
+/* Shared backdrop */
+.cp-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  background: rgba(10, 8, 7, 0.82);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cp-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Shared close button */
+.cp-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(10, 8, 7, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.cp-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Shared dismiss × button (smaller, top-right of teaser/toast) */
+.cp-dismiss-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 16px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cp-dismiss-x {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: inherit;
+}
+
+/* Contextual lightbox */
+.cp-lightbox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -48%) scale(0.94);
+  z-index: 8001;
+  width: min(560px, 90vw);
+  background: #161311;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.cp-lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.cp-lightbox-img {
+  width: 100%;
+  display: block;
+  max-height: 70vh;
+  object-fit: contain;
+  background: #0f0c0b;
+}
+
+.cp-lightbox-caption {
+  padding: 16px 22px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+}
+
+/* Section teaser */
+.cp-teaser {
+  position: fixed;
+  bottom: 100px;
+  right: -340px;
+  z-index: 7000;
+  width: 300px;
+  background: #1a1614;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: right 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.cp-teaser.visible {
+  right: 24px;
+}
+
+.cp-teaser-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.cp-teaser-label {
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sun-landing);
+}
+
+.cp-teaser-text {
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.cp-teaser-cta {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sky, #3ab3e5);
+  text-decoration: none;
+}
+
+/* Exit-intent banner */
+.cp-exit-banner {
+  position: fixed;
+  bottom: -120px;
+  left: 0;
+  right: 0;
+  z-index: 7000;
+  background: linear-gradient(135deg, #1a1614, #2a1520);
+  border-top: 1px solid rgba(159, 25, 126, 0.3);
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  transition: bottom 0.4s ease;
+}
+
+.cp-exit-banner.visible {
+  bottom: 0;
+}
+
+.cp-exit-img {
+  height: 64px;
+  width: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.cp-exit-body {
+  flex: 1;
+  cursor: pointer;
+}
+
+.cp-exit-headline {
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.cp-exit-sub {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cp-exit-cta {
+  padding: 10px 22px;
+  border-radius: 30px;
+  background: #f8e200;
+  color: #1a1614;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.cp-exit-cta:hover {
+  background: #fff;
+}
+
+/* Milestone toast */
+.cp-toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 7000;
+  width: 280px;
+  background: #1a1614;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.35s ease,
+              transform 0.35s ease,
+              border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.cp-toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.cp-toast-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.cp-toast-body {
+  flex: 1;
+}
+
+.cp-toast-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 3px;
+}
+
+.cp-toast-text {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+}
+
+.cp-toast-close {
+  position: static;   /* override .cp-dismiss-btn absolute */
+  flex-shrink: 0;
+  padding: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Campaign ad modal */
+.cp-ad-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  background: rgba(10, 8, 7, 0.88);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cp-ad-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cp-ad-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -48%) scale(0.94);
+  z-index: 9101;
+  width: min(600px, 92vw);
+  background: #161311;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.cp-ad-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.cp-ad-img {
+  width: 100%;
+  display: block;
+  max-height: 55vh;
+  object-fit: cover;
+  background: #0f0c0b;
+}
+
+.cp-ad-body {
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cp-ad-label {
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sun-landing, #f8e200);
+}
+
+.cp-ad-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.cp-ad-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+  margin-top: 2px;
+}
+
+.cp-ad-cta {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 11px 26px;
+  border-radius: 30px;
+  background: var(--sun-landing, #f8e200);
+  color: #1a1614;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background 0.2s;
+}
+
+.cp-ad-cta:hover {
+  background: #fff;
+}
