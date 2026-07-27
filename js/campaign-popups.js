@@ -92,7 +92,7 @@ function openAdModal(cfg) {
   document.getElementById('cp-ad-img').src          = mediaUrl(cfg.image)  || '';
   document.getElementById('cp-ad-label').textContent = cfg.label  || cfg.title || '';
   document.getElementById('cp-ad-title').textContent = cfg.title  || cfg.headline || cfg.label || '';
-  document.getElementById('cp-ad-body-text').textContent  = cfg.body   || cfg.text  || cfg.sub || cfg.caption || '';
+  document.getElementById('cp-ad-body').textContent  = cfg.body   || cfg.text  || cfg.sub || cfg.caption || '';
   const cta = document.getElementById('cp-ad-cta');
   cta.href        = cfg.ctaHref  || '#';
   cta.textContent = cfg.ctaLabel || cfg.ctaLabel || 'Explore →';
@@ -164,7 +164,7 @@ function showToast() {
   const cfg = CAMPAIGNS.milestone;
   document.getElementById('cp-toast-img').src         = mediaUrl(cfg.image);
   document.getElementById('cp-toast-title').textContent = cfg.title;
-  document.getElementById('cp-toast-body-text').textContent  = cfg.body;
+  document.getElementById('cp-toast-body').textContent  = cfg.body;
   const el = document.getElementById('cp-toast');
   el.classList.add('open');      // for lightbox, backdrop, ad-modal
   el.style.transform = 'translateY(0)';

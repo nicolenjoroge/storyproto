@@ -4336,7 +4336,7 @@ nav.masternav {
   color: var(--coral-spotlight);
 }
 
-/* ── FOOTER ──────────────────────────────────────────────────────────────── */
+/* ── FOOTER ── */
 .site-footer {
   background: linear-gradient(135deg, #1a1614, #2a1520);
   border-top: 1px solid rgba(159, 25, 126, 0.3);
@@ -4354,7 +4354,7 @@ nav.masternav {
   flex-wrap: wrap;
 }
 
-.footer-logo {
+#sec-footer .footer-logo {
   height: 300px;
   width: auto;
   object-fit: cover;
@@ -4362,25 +4362,25 @@ nav.masternav {
   flex-shrink: 0;
 }
 
-.footer-copy {
+#sec-footer .footer-copy {
   flex: 1;
   min-width: 200px;
 }
 
-.footer-headline {
+#sec-footer .footer-headline {
   font-size: 18px;
   font-weight: bold;
   color: #fff;
   margin-bottom: 6px;
 }
 
-.footer-sub {
+#sec-footer .footer-sub {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.45);
   line-height: 1.6;
 }
 
-.footer-cta {
+#sec-footer .footer-cta {
   padding: 12px 28px;
   border-radius: 30px;
   background: #f8e200;
@@ -4397,16 +4397,16 @@ nav.masternav {
   transition: background 0.2s, transform 0.2s;
 }
 
-.footer-cta:hover {
+#sec-footer .footer-cta:hover {
   background: #fff;
   transform: translateY(-1px);
 }
 
-.footer-divider {
+#sec-footer .footer-divider {
   border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.footer-bottom {
+#sec-footer .footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -4414,10 +4414,11 @@ nav.masternav {
   gap: 12px;
 }
 
-.footer-legal {
+#sec-footer .footer-legal {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.25);
 }
+
 
 /* ── CAMPAIGN POPUP SYSTEM ───────────────────────────────────────────────── */
 
