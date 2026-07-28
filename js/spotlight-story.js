@@ -49,53 +49,64 @@ export function renderSpotlightStory(item) {
 // Injects additional panels into the pin-track between panel 1 and the close panel.
 
 function _renderBlockPanels(blocks, item, usage, media, story) {
-  const track    = elById('pin-track');
+  const track      = elById('pin-track');
   const closePanel = track.querySelector('.panel-close');
 
-  // Remove any previously injected block panels
+  // Remove previously injected block panels
   track.querySelectorAll('.panel-block').forEach(el => el.remove());
 
-  // Render each block as a panel (skip narrative — already in panel 1)
+  // Group consecutive table stats-grids into one panel
+  const grouped = [];
+  let tableBuffer = [];
+
   blocks
     .filter(b => b.type !== 'narrative')
     .forEach(b => {
-      const panel = document.createElement('section');
-      panel.className = 'panel panel-block';
-
-      switch (b.type) {
-
-        case 'stats-grid':
-          panel.innerHTML = _blockStatsGrid(b);
-          break;
-
-        case 'bar-chart':
-          panel.innerHTML = _blockBarChart(b);
-          break;
-
-        case 'media-shelf':
-          panel.innerHTML = _blockMediaShelf(b.items || [], item);
-          break;
-
-        case 'quote':
-          panel.innerHTML = _blockQuote(b);
-          break;
-
-        case 'closing':
-          // Don't add a separate closing panel — update the existing one instead
-          _applyClosing(b.line, b.body);
-          return;
-
-        default:
-          return;
+      if (b.type === 'stats-grid' && (b.displayMode || 'cards') === 'table') {
+        tableBuffer.push(b);
+      } else {
+        if (tableBuffer.length) {
+          grouped.push({ type: '__table-group__', blocks: tableBuffer });
+          tableBuffer = [];
+        }
+        grouped.push(b);
       }
-
-      track.insertBefore(panel, closePanel);
     });
 
-  // Update the dot count on the scroll rail
+  // Flush any remaining table blocks
+  if (tableBuffer.length) {
+    grouped.push({ type: '__table-group__', blocks: tableBuffer });
+  }
+
+  // Render each group/block as a panel
+  grouped.forEach(b => {
+    if (b.type === 'closing') {
+      _applyClosing(b.line, b.body);
+      return;
+    }
+
+    const panel = document.createElement('section');
+    panel.className = 'panel panel-block';
+
+    if (b.type === '__table-group__') {
+      panel.innerHTML = _blockTableGroup(b.blocks);
+    } else if (b.type === 'stats-grid') {
+      panel.innerHTML = _blockStatsGrid(b);
+    } else if (b.type === 'bar-chart') {
+      panel.innerHTML = _blockBarChart(b);
+    } else if (b.type === 'media-shelf') {
+      panel.innerHTML = _blockMediaShelf(b.items || [], item);
+    } else if (b.type === 'quote') {
+      panel.innerHTML = _blockQuote(b);
+    } else {
+      return;
+    }
+
+    track.insertBefore(panel, closePanel);
+  });
+
   _updateScrollRail(track);
 
-  // Update close panel from story.closing fallback
   const closingBlock = blocks.find(b => b.type === 'closing');
   if (closingBlock) {
     _applyClosing(closingBlock.line, closingBlock.body);
@@ -137,6 +148,42 @@ function _renderLegacyPanels(usage, media, story, item) {
 }
 
 // ── Block renderers ───────────────────────────────────────────────────────
+
+// Groups multiple table stats-grids into one panel in a flex grid
+function _blockTableGroup(tableBlocks) {
+  const grids = tableBlocks.map(b => {
+    const items = b.items || [];
+    const max   = Math.max(...items.map(i => parseFloat(i.value) || 0), 1);
+    const rows  = items.map((item, idx) => `
+      <div class="usage-item">
+        <div class="usage-item-top">
+          <div class="usage-item-left">
+            <div class="usage-item-name-row">
+              <span class="usage-rank">${idx + 1}</span>
+              <span class="usage-item-name">${item.name || ''}</span>
+            </div>
+          </div>
+          <span class="usage-item-count">${item.value || ''}</span>
+        </div>
+        <div class="usage-bar-track">
+          <div class="usage-bar-fill" style="width:${Math.round(((parseFloat(item.value) || 0) / max) * 100)}%"></div>
+        </div>
+      </div>`).join('');
+
+    return `
+      <div class="usage-block">
+        ${b.title ? `<div class="usage-block-label">${b.title}</div>` : ''}
+        <div class="usage-row">${rows}</div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="panel-inner">
+      <p class="panel-eyebrow" style="color:var(--sky)">Usage breakdown</p>
+      <h2 class="panel-heading">Who's using it</h2>
+      <div class="usage-grid" style="margin-top:24px;">${grids}</div>
+    </div>`;
+}
 
 function _blockStatsGrid(b) {
   const items = b.items || [];
