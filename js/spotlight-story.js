@@ -55,31 +55,25 @@ function _renderBlockPanels(blocks, item, usage, media, story) {
   // Remove previously injected block panels
   track.querySelectorAll('.panel-block').forEach(el => el.remove());
 
-  // Group consecutive table stats-grids into one panel
-  const grouped = [];
-  let tableBuffer = [];
+  // Separate table blocks from everything else
+  const tableBlocks = blocks.filter(b =>
+    b.type === 'stats-grid' && b.displayMode === 'table'
+  );
+  const otherBlocks = blocks.filter(b =>
+    b.type === 'narrative' ? false :          // skip narrative — already in panel 1
+    !(b.type === 'stats-grid' && b.displayMode === 'table')
+  );
 
-  blocks
-    .filter(b => b.type !== 'narrative')
-    .forEach(b => {
-      if (b.type === 'stats-grid' && (b.displayMode || 'cards') === 'table') {
-        tableBuffer.push(b);
-      } else {
-        if (tableBuffer.length) {
-          grouped.push({ type: '__table-group__', blocks: tableBuffer });
-          tableBuffer = [];
-        }
-        grouped.push(b);
-      }
-    });
-
-  // Flush any remaining table blocks
-  if (tableBuffer.length) {
-    grouped.push({ type: '__table-group__', blocks: tableBuffer });
+  // All table blocks → one panel
+  if (tableBlocks.length) {
+    const tablePanel = document.createElement('section');
+    tablePanel.className = 'panel panel-block';
+    tablePanel.innerHTML = _blockTableGroup(tableBlocks);
+    track.insertBefore(tablePanel, closePanel);
   }
 
-  // Render each group/block as a panel
-  grouped.forEach(b => {
+  // Everything else → individual panels in original order
+  otherBlocks.forEach(b => {
     if (b.type === 'closing') {
       _applyClosing(b.line, b.body);
       return;
@@ -88,10 +82,8 @@ function _renderBlockPanels(blocks, item, usage, media, story) {
     const panel = document.createElement('section');
     panel.className = 'panel panel-block';
 
-    if (b.type === '__table-group__') {
-      panel.innerHTML = _blockTableGroup(b.blocks);
-    } else if (b.type === 'stats-grid') {
-      panel.innerHTML = _blockStatsGrid(b);
+    if (b.type === 'stats-grid') {
+      panel.innerHTML = _blockStatsGrid(b);        // cards mode
     } else if (b.type === 'bar-chart') {
       panel.innerHTML = _blockBarChart(b);
     } else if (b.type === 'media-shelf') {
@@ -119,30 +111,52 @@ function _renderBlockPanels(blocks, item, usage, media, story) {
 
 // ── Legacy panel renderer (no blocks) ────────────────────────────────────
 function _renderLegacyPanels(usage, media, story, item) {
+  const track      = elById('pin-track');
+  const closePanel = track.querySelector('.panel-close');
+
+  // Remove any previously injected block panels
+  track.querySelectorAll('.panel-block').forEach(el => el.remove());
+
   // Panel 2 — Usage
-  elById('usage-grid').innerHTML =
-    usageBlock('Top users',          usage.topUsers         || [], 'user') +
-    usageBlock('Top departments',    usage.topDepartments   || [], 'dept') +
-    usageBlock('Top document types', usage.topDocumentTypes || [], 'doc');
+  const usagePanel = document.createElement('section');
+  usagePanel.className = 'panel panel-block';
+  usagePanel.style.background = 'linear-gradient(155deg, #1e2a38, #19222e)';
+  usagePanel.innerHTML = `
+    <div class="panel-inner">
+      <p class="panel-eyebrow" style="color:var(--sky)">Who's using it</p>
+      <h2 class="panel-heading">Usage at a glance</h2>
+      <div class="usage-grid" style="margin-top:24px;">
+        ${usageBlock('Top users',          usage.topUsers         || [], 'user')}
+        ${usageBlock('Top departments',    usage.topDepartments   || [], 'dept')}
+        ${usageBlock('Top document types', usage.topDocumentTypes || [], 'doc')}
+      </div>
+    </div>`;
+  track.insertBefore(usagePanel, closePanel);
 
   // Panel 3 — Media
-  elById('media-shelf').innerHTML =
-    media.length
-      ? media.slice(0, 4).map(m => mediaCard(m)).join('')
-      : `<div class="media-card">
-           <div class="media-card-visual">
-             <div class="media-placeholder">
-               <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                 <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                 <path d="M3 9h18M9 21V9" stroke="currentColor" stroke-width="1.5"/>
-               </svg>
-               Media coming soon
-             </div>
-           </div>
-           <div class="media-card-caption">Screenshots and recordings will appear here.</div>
-         </div>`;
+  const mediaPanel = document.createElement('section');
+  mediaPanel.className = 'panel panel-block';
+  mediaPanel.style.background = 'linear-gradient(155deg, #2f3a42, #263038)';
+  mediaPanel.innerHTML = `
+    <div class="panel-inner">
+      <p class="panel-eyebrow" style="color:var(--med)">Behind the scenes</p>
+      <h2 class="panel-heading">An inside look at the solution</h2>
+      <p class="panel-body">Screenshots and recordings in action</p>
+      <div class="media-shelf" style="margin-top:28px;">
+        ${media.length
+          ? media.slice(0, 4).map(m => mediaCard(m)).join('')
+          : `<div class="media-card">
+               <div class="media-card-visual">
+                 <div class="media-placeholder">Media coming soon</div>
+               </div>
+             </div>`}
+      </div>
+    </div>`;
+  track.insertBefore(mediaPanel, closePanel);
 
-  // Panel 4 — Close
+  _updateScrollRail(track);
+
+  // Close panel
   _applyClosing(story.closing?.line, story.closing?.body);
   if (!story.closing?.line) setById('close-title', `${item.title} is live across NCBA.`);
 }
@@ -180,7 +194,7 @@ function _blockTableGroup(tableBlocks) {
   return `
     <div class="panel-inner">
       <p class="panel-eyebrow" style="color:var(--sky)">Usage breakdown</p>
-      <h2 class="panel-heading">Who's using it</h2>
+      <h2 class="panel-heading">Usage at a glance</h2>
       <div class="usage-grid" style="margin-top:24px;">${grids}</div>
     </div>`;
 }
@@ -294,12 +308,19 @@ function _applyClosing(line, body) {
 // Adds dots for dynamically injected panels
 
 function _updateScrollRail(track) {
-  const rail       = elById('scroll-rail');
+  const rail = elById('scroll-rail');
   if (!rail) return;
-  const panelCount = track.querySelectorAll('.panel').length;
-  rail.innerHTML   = Array.from({ length: panelCount }, (_, i) =>
-    `<span class="rail-dot" data-panel="${i}"></span>`
+
+  const panels = Array.from(track.querySelectorAll('.panel'));
+  rail.innerHTML = panels.map((_, i) =>
+    `<span class="rail-dot${i === 0 ? ' is-active' : ''}" data-panel="${i}"></span>`
   ).join('') + `<span class="rail-label" id="rail-label">Scroll</span>`;
+
+  // Update pin-host height to account for new panel count
+  const pinHost = elById('pin-host');
+  if (pinHost) {
+    pinHost.style.height = `${panels.length * 100}vh`;
+  }
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────
