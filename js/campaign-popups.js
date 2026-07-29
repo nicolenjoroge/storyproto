@@ -140,7 +140,7 @@ function showTeaser(cfg) {
   document.getElementById('cp-teaser-label').textContent = cfg.label;
   document.getElementById('cp-teaser-text').textContent  = cfg.text;
   const cta = document.getElementById('cp-teaser-cta');
-  cta.href        = cfg.ctaHref;
+  cta.href = cfg.ctaHref;
   cta.textContent = cfg.ctaLabel;
   document.getElementById('cp-teaser').style.right = '24px';
   // Register click handler — opens full ad modal; dismiss/CTA buttons stop propagation
