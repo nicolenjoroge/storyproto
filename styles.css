@@ -461,7 +461,9 @@ nav.masternav {
   border-radius: 0 0 14px 14px;
   min-height: 160px;
   display: flex;
+  flex-direction: row;
   align-items: flex-end;
+  gap: 16px;
   padding: 24px 22px;
   flex-shrink: 0;
 }
@@ -501,9 +503,26 @@ nav.masternav {
 #sec-landing .storyhub-banner-content {
   position: relative;
   z-index: 1;
+  flex: 1;
+  min-width: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: 6px;
+}
+
+#sec-landing .storyhub-banner .dash-btn {
+  /* flex-shrink: 0;               never shrinks, stays full size */
+  /* align-self: flex-end;         pins to the bottom of the banner */
+  /* white-space: nowrap; */
+  font-size: 12px;
+  padding: 10px 20px;
+}
+
+#sec-landing .storyhub-banner-actions {
+  display: flex;
+  justify-content: flex-end;   /* pushes button to the right */
+  margin-top: 2px;
 }
 
 #sec-landing .storyhub-banner-eyebrow {
@@ -1039,6 +1058,7 @@ nav.masternav {
     overflow: visible;
     height: auto;
   }
+
 
   #sec-landing .resolution {
     padding: 8px 20px 56px;
