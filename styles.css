@@ -4847,7 +4847,7 @@ body:not(.auth-ready)::before {
 .nav-signout-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 7px 16px;
   border-radius: 20px;
   background: transparent;
