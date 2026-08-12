@@ -1,7 +1,4 @@
 // ── AUTH — MSAL v2 ────────────────────────────────────────────────────────────
-import { PublicClientApplication, InteractionRequiredAuthError } from
-  'https://alcdn.msauth.net/browser/2.38.3/js/msal-browser.esm.min.js';
-
 const MSAL_CONFIG = {
   auth: {
     clientId:    'e7b4c1f3-119f-4a5c-9a83-eca6314a7926',
@@ -23,7 +20,7 @@ let _account      = null;
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 export async function initAuth() {
-  _msalInstance = new PublicClientApplication(MSAL_CONFIG);
+  _msalInstance = new msal.PublicClientApplication(MSAL_CONFIG);
   await _msalInstance.initialize();
 
   // Handle redirect response on page load
