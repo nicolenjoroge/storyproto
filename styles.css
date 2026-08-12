@@ -4827,3 +4827,19 @@ nav.masternav {
 .cp-ad-cta:hover {
   background: #fff;
 }
+
+/* Page is invisible until auth confirms — prevents flash of content */
+body:not(.auth-ready) .page-section,
+body:not(.auth-ready) nav.masternav,
+body:not(.auth-ready) .site-footer {
+  visibility: hidden;
+}
+
+/* Loading state while auth is resolving */
+body:not(.auth-ready)::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #1a1614;
+  z-index: 9998;
+}
