@@ -14,9 +14,6 @@ async function boot() {
 
   document.body.classList.add('auth-ready');
 
-  // Populate nav user display
-  const nameEl = document.getElementById('nav-user-name');
-  if (nameEl) nameEl.textContent = account.name || account.username;
 
   // Expose sign out globally for the onclick
   window.signOutUser = signOut;

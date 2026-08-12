@@ -4843,3 +4843,26 @@ body:not(.auth-ready)::before {
   background: #1a1614;
   z-index: 9998;
 }
+
+.nav-signout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 20px;
+  background: transparent;
+  border: 1px solid #3ab3e5;
+  color: #3ab3e5;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-signout-btn:hover {
+  background: #3ab3e5;
+  color: #0b1a20;
+}
